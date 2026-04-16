@@ -1,0 +1,99 @@
+/* ═══════════════════════════════════════════
+   WOLFIM — Complex Keyframes
+   CSS animations that are more performant as
+   pure CSS than JS-driven animation.
+   ═══════════════════════════════════════════ */
+
+/* Gradient mesh background for CTA section */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-mesh {
+  background: radial-gradient(ellipse at 20% 50%, rgba(200, 255, 0, 0.2) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 100%, rgba(200, 255, 0, 0.1) 0%, transparent 50%),
+              #080808;
+  background-size: 200% 200%;
+  animation: gradient-shift 10s ease-in-out infinite;
+}
+
+/* Noise / Grain Filter */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 50;
+}
+
+/* Scroll indicator bounce */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(12px); opacity: 0.5; }
+}
+
+.scroll-cue {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* Marquee for logo strip */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+/* Glow pulse for featured pricing card */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(200, 255, 0, 0.2),
+                0 0 24px rgba(200, 255, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(200, 255, 0, 0.4),
+                0 0 48px rgba(200, 255, 0, 0.15);
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Notification enter for LiveFeed */
+@keyframes notif-enter {
+  0% {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.notif-enter {
+  animation: notif-enter 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* Floating badge gentle float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-gentle {
+  animation: float 4s ease-in-out infinite;
+}
+
+.float-gentle-delayed {
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
