@@ -25,7 +25,12 @@ const wordVariant = {
     y: 0,
     opacity: 1,
     filter: "blur(0px)",
-    transition: { type: "spring", damping: 20, stiffness: 180 },
+    transition: {
+      type: "spring",
+      damping: 20,
+      stiffness: 180,
+      filter: { type: "tween", duration: 0.6, ease: "easeOut" },
+    },
   },
 }
 
@@ -141,8 +146,8 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
         </div>
 
         {/* Cinematic Overlays to improve text contrast and blending */}
-        <div className="absolute inset-0 bg-black/20 mix-blend-multiply z-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#080808]/30 to-[#080808] z-20" />
+        <div className="absolute inset-0 bg-black/10 mix-blend-multiply z-20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#080808]/15 to-[#080808]/80 z-20" />
       </Layer>
 
       {/* Layer 1 — Noise texture overlay */}
