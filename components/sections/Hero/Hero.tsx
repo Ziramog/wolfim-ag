@@ -102,14 +102,21 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const videoRef3 = useRef<HTMLVideoElement>(null)
 
+  const currentVideos = isMobile ? MOBILE_VIDEOS : DESKTOP_VIDEOS
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   useEffect(() => {
     const isReveal = activeIdx === currentVideos.length - 1
     window.dispatchEvent(new CustomEvent("wolfimNarrativeState", { 
       detail: { isReveal } 
     }))
   }, [activeIdx, currentVideos.length])
-
-  const currentVideos = isMobile ? MOBILE_VIDEOS : DESKTOP_VIDEOS
 
   const handleVideoEnd = () => {
     const nextIdx = (activeIdx + 1) % currentVideos.length
