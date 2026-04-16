@@ -16,6 +16,7 @@ const DESKTOP_VIDEOS = [
 
 const MOBILE_VIDEOS = [
   "/videos/mobile/hero_1_antes.mp4",
+  "/videos/mobile/hero_1_hoy.mp4",
   "/videos/mobile/7547848-uhd_2160_3840_25fps.mp4",
   "/videos/mobile/hero_2_M.mp4",
 ]
@@ -101,6 +102,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   const videoRef1 = useRef<HTMLVideoElement>(null)
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const videoRef3 = useRef<HTMLVideoElement>(null)
+  const videoRef4 = useRef<HTMLVideoElement>(null)
 
   const currentVideos = isMobile ? MOBILE_VIDEOS : DESKTOP_VIDEOS
 
@@ -122,7 +124,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
     const nextIdx = (activeIdx + 1) % currentVideos.length
     
     // Play next video in the loop
-    const refs = [videoRef1, videoRef2, videoRef3]
+    const refs = [videoRef1, videoRef2, videoRef3, videoRef4]
     const nextRef = refs[nextIdx]?.current
     
     if (nextRef) {
@@ -178,25 +180,42 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
               activeIdx === 2 ? "opacity-100 z-10" : "opacity-0 z-0"
             )}
           />
+          {/* Video Buffer 4 */}
+          <video
+            ref={videoRef4}
+            src={currentVideos[3] || ""}
+            muted
+            playsInline
+            preload="auto"
+            onEnded={handleVideoEnd}
+            className={cn(
+              "absolute inset-0 object-cover w-full h-full transition-opacity duration-1000",
+              activeIdx === 3 ? "opacity-100 z-10" : "opacity-0 z-0"
+            )}
+          />
         </div>
-
-        {/* Narrative Text Overlay */}
-        <AnimatePresence mode="wait">
-          {activeIdx === 0 && (
-            <NarrativeText key="antes" text="antes..." delay={2} />
-          )}
-          {activeIdx === 1 && currentVideos.length > 2 && (
-            <NarrativeText key="cambio" text="todo esta cambiando y vos?..." delay={1} />
-          )}
-        </AnimatePresence>
 
         {/* Cinematic Overlays to improve text contrast and blending */}
         <div className="absolute inset-0 bg-black/10 mix-blend-multiply z-20" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#080808]/15 to-[#080808]/80 z-20" />
       </Layer>
 
-      {/* Layer 1 — Noise texture overlay */}
+      {/* Layer 1 — Noise texture overlay & Narrative Text */}
       <Layer depth={1} type="background" speed={0.2}>
+        {/* Narrative Text Overlay with Parallax Depth */}
+        <div className="absolute inset-0 pointer-events-none">
+          <AnimatePresence mode="wait">
+            {activeIdx === 0 && (
+              <NarrativeText key="antes" text="antes..." delay={2} />
+            )}
+            {activeIdx === 1 && currentVideos.length > 2 && (
+              <NarrativeText key="hoy" text="hoy..." delay={1.5} />
+            )}
+            {activeIdx === 2 && currentVideos.length > 3 && (
+              <NarrativeText key="cambio" text="todo esta cambiando y vos?..." delay={1} />
+            )}
+          </AnimatePresence>
+        </div>
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
