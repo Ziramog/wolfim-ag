@@ -156,6 +156,16 @@
       "sourceType": "github",
       "computedHash": "7e94629c1bafd6459b4f113237655a98761438eb1b26aa15c440351f79a86d2e"
     },
+    "scroll-animations": {
+      "source": "dylantarre/animation-principles",
+      "sourceType": "github",
+      "computedHash": "16e1d229291ca23991f26215efd830f1ce942fdca60deb43f9fbe04a1fee43c2"
+    },
+    "scroll-storyteller": {
+      "source": "ingpoc/skills",
+      "sourceType": "github",
+      "computedHash": "9ad3b6898fdd61d72162f57e993775b413c888a79102ccc7b3cd6c68aaeb3012"
+    },
     "seo-audit": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",

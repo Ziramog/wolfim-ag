@@ -1,12 +1,30 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils/cn"
 
 export function StickyNav() {
   const { scrollY } = useScroll()
+  const [isReveal, setIsReveal] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
   const bgOpacity = useTransform(scrollY, [0, 100], [0, 1])
   const borderOpacity = useTransform(scrollY, [0, 100], [0, 0.08])
+
+  useEffect(() => {
+    const handleNarrative = (e: any) => setIsReveal(e.detail.isReveal)
+    window.addEventListener("wolfimNarrativeState" as any, handleNarrative)
+    
+    const unsubs = scrollY.on("change", (v) => setIsScrolled(v > 100))
+    
+    return () => {
+      window.removeEventListener("wolfimNarrativeState" as any, handleNarrative)
+      unsubs()
+    }
+  }, [scrollY])
+
+  const showLogo = isReveal || isScrolled
 
   return (
     <motion.nav
@@ -28,13 +46,27 @@ export function StickyNav() {
     >
       <div className="max-w-container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2 group" data-cursor>
-          <img 
-            src="/images/desktop/wolfim_logo_header.jpeg" 
-            alt="WOLFIM" 
-            className="h-12 w-auto object-contain transition-opacity group-hover:opacity-80" 
-          />
-        </a>
+        <div className="flex items-center min-w-[120px]">
+          <AnimatePresence>
+            {showLogo && (
+              <motion.a 
+                href="/" 
+                initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="flex items-center gap-2 group" 
+                data-cursor
+              >
+                <img 
+                  src="/images/desktop/wolfim_logo_header.jpeg" 
+                  alt="WOLFIM" 
+                  className="h-12 w-auto object-contain transition-opacity group-hover:opacity-80" 
+                />
+              </motion.a>
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* Nav links (desktop) */}
         <div className="hidden md:flex items-center gap-8">
