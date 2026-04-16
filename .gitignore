@@ -37,4 +37,4 @@ next-env.d.ts
 *.mov
 *.avi
 *.mp4
-!public/videos/*.mp4
+!public/videos/**
