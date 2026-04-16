@@ -22,16 +22,15 @@ const MOBILE_VIDEOS = [
 ]
 
 const wordVariant = {
-  hidden: { y: 60, opacity: 0, filter: "blur(8px)" },
+  hidden: { y: 20, opacity: 0, filter: "blur(4px)" },
   visible: {
     y: 0,
     opacity: 1,
     filter: "blur(0px)",
     transition: {
-      type: "spring",
-      damping: 20,
-      stiffness: 180,
-      filter: { type: "tween", duration: 0.6, ease: "easeOut" },
+      y: { type: "spring", damping: 25, stiffness: 200 },
+      opacity: { duration: 0.8 },
+      filter: { duration: 0.8, ease: "easeOut" }
     },
   },
 }
@@ -61,21 +60,55 @@ function HeroHeadline({ text }: { text: string }) {
   )
 }
 
-function NarrativeText({ text, delay = 2 }: { text: string; delay?: number }) {
+const narrativeVariants = {
+  soft: {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
+    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+  },
+  glitch: {
+    initial: { opacity: 0, x: -10, filter: "blur(8px)" },
+    animate: { 
+      opacity: 1, 
+      x: [0, -2, 2, 0], 
+      filter: "blur(0px)",
+    },
+    exit: { opacity: 0, filter: "blur(8px)" },
+    transition: { 
+      duration: 0.8, 
+      x: { repeat: 1, duration: 0.1, ease: "linear" } 
+    }
+  },
+  impact: {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 1.05 },
+    transition: { type: "spring", damping: 15, stiffness: 300 }
+  }
+}
+
+function NarrativeText({ 
+  text, 
+  variant = "soft",
+  delay = 0 
+}: { 
+  text: string; 
+  variant?: keyof typeof narrativeVariants;
+  delay?: number 
+}) {
+  const currentVariant = narrativeVariants[variant]
+  
   return (
     <motion.div
-      initial={{ opacity: 0, x: -40, filter: "blur(10px)" }}
-      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-      exit={{ opacity: 0, x: 20, filter: "blur(10px)" }}
-      transition={{ 
-        delay, 
-        duration: 1.2, 
-        ease: [0.22, 1, 0.36, 1],
-        filter: { duration: 0.8, delay } 
-      }}
-      className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-30"
+      key={text}
+      initial={currentVariant.initial}
+      animate={currentVariant.animate}
+      exit={currentVariant.exit}
+      transition={{ ...currentVariant.transition, delay }}
+      className="absolute bottom-[18%] left-0 w-full px-8 z-40 text-center pointer-events-none"
     >
-      <h2 className="font-display text-[clamp(2rem,6vw,4rem)] text-white/90 tracking-tight">
+      <h2 className="font-body font-bold text-[clamp(1.25rem,4.5vw,2.5rem)] text-white tracking-tight leading-tight mx-auto max-w-[90%]">
         {text}
       </h2>
     </motion.div>
@@ -99,12 +132,17 @@ function ScrollCue() {
 export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroData) {
   const [activeIdx, setActiveIdx] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [revealStage, setRevealStage] = useState(0)
+  const [isGlitching, setIsGlitching] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const videoRef1 = useRef<HTMLVideoElement>(null)
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const videoRef3 = useRef<HTMLVideoElement>(null)
   const videoRef4 = useRef<HTMLVideoElement>(null)
 
   const currentVideos = isMobile ? MOBILE_VIDEOS : DESKTOP_VIDEOS
+  const finalIdx = currentVideos.length - 1
+  const isFinalScene = activeIdx === finalIdx
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -121,98 +159,193 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   }, [activeIdx, currentVideos.length])
 
   const handleVideoEnd = () => {
-    const nextIdx = (activeIdx + 1) % currentVideos.length
-    
-    // Play next video in the loop
-    const refs = [videoRef1, videoRef2, videoRef3, videoRef4]
-    const nextRef = refs[nextIdx]?.current
-    
-    if (nextRef) {
-      nextRef.currentTime = 0
-      nextRef.play()
+    // Only continue narrative if there are more videos
+    if (activeIdx < finalIdx) {
+      const nextIdx = activeIdx + 1
+      
+      if (activeIdx === 0 && nextIdx === 1) {
+        setIsGlitching(true)
+        setTimeout(() => setIsGlitching(false), 400)
+      }
+
+      setRevealStage(0)
+      
+      const refs = [videoRef1, videoRef2, videoRef3, videoRef4]
+      const nextRef = refs[nextIdx]?.current
+      
+      if (nextRef && nextRef.src) {
+        nextRef.currentTime = 0
+        nextRef.play().catch(() => {})
+      }
+      setActiveIdx(nextIdx)
+    } else {
+      // Loop the final scene
+      const refs = [videoRef1, videoRef2, videoRef3, videoRef4]
+      const finalRef = refs[finalIdx]?.current
+      if (finalRef && finalRef.src) {
+        finalRef.currentTime = 0
+        finalRef.play().catch(() => {})
+      }
     }
-    
-    setActiveIdx(nextIdx)
   }
+
+  // Timer-based revealed for Scene 4 sub-stages
+  useEffect(() => {
+    if (isFinalScene) {
+      const t1 = setTimeout(() => setRevealStage(1), 3000) // "Adaptate"
+      const t2 = setTimeout(() => setRevealStage(2), 6500) // Hero UI
+      return () => { clearTimeout(t1); clearTimeout(t2); }
+    } else {
+      setRevealStage(0)
+    }
+  }, [activeIdx, isFinalScene])
 
   return (
     <ParallaxSection className="h-screen min-h-[600px]" id="hero">
       {/* Layer 0 — Cinematic Video Playlist with Crossfade */}
       <Layer depth={0} type="background" blur={false} scale>
         <div className="relative w-full h-full bg-black overflow-hidden">
-          {/* Video Buffer 1 */}
+          {/* Global Transition Effects (Glitch/Flash) */}
+          <AnimatePresence>
+            {isGlitching && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1, 0] }}
+                className="absolute inset-0 z-50 bg-white/20 backdrop-invert-[0.2]"
+                transition={{ duration: 0.4 }}
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Scene-specific Overlays */}
+          <div className="absolute inset-0 z-20 pointer-events-none">
+            <AnimatePresence mode="wait">
+                <motion.div 
+                  key="analog-effects"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 pointer-events-none"
+                >
+                  <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
+                  <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiLz48L3N2Zz4=')] bg-repeat" />
+                </motion.div>
+              {activeIdx === 1 && (
+                <motion.div 
+                  key="noise-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"
+                >
+                  <div className="absolute inset-0 radial-vignette opacity-25" />
+                </motion.div>
+              )}
+              {activeIdx === 2 && (
+                <motion.div 
+                  key="transform-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-black/10 mix-blend-overlay"
+                />
+              )}
+              {activeIdx === 3 && (
+                <motion.div 
+                  key="future-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-blue-500/5 mix-blend-screen"
+                />
+              )}
+            </AnimatePresence>
+          </div>
+
           <video
             ref={videoRef1}
             src={currentVideos[0] || ""}
             autoPlay
-            muted
+            muted={isMuted}
             playsInline
             preload="auto"
             onEnded={handleVideoEnd}
             className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-1000",
-              activeIdx === 0 ? "opacity-100 z-10" : "opacity-0 z-0"
+              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+              activeIdx === 0 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
           />
-          {/* Video Buffer 2 */}
           <video
             ref={videoRef2}
             src={currentVideos[1] || ""}
-            muted
+            muted={isMuted}
             playsInline
             preload="auto"
             onEnded={handleVideoEnd}
             className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-1000",
-              activeIdx === 1 ? "opacity-100 z-10" : "opacity-0 z-0"
+              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+              activeIdx === 1 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
           />
-          {/* Video Buffer 3 */}
           <video
             ref={videoRef3}
             src={currentVideos[2] || ""}
-            muted
+            muted={isMuted}
             playsInline
             preload="auto"
             onEnded={handleVideoEnd}
             className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-1000",
-              activeIdx === 2 ? "opacity-100 z-10" : "opacity-0 z-0"
+              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+              activeIdx === 2 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
           />
-          {/* Video Buffer 4 */}
           <video
             ref={videoRef4}
             src={currentVideos[3] || ""}
-            muted
+            muted={isMuted}
             playsInline
             preload="auto"
             onEnded={handleVideoEnd}
             className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-1000",
-              activeIdx === 3 ? "opacity-100 z-10" : "opacity-0 z-0"
+              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+              activeIdx === 3 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
           />
         </div>
-
-        {/* Cinematic Overlays to improve text contrast and blending */}
-        <div className="absolute inset-0 bg-black/10 mix-blend-multiply z-20" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#080808]/15 to-[#080808]/80 z-20" />
       </Layer>
 
       {/* Layer 1 — Noise texture overlay & Narrative Text */}
       <Layer depth={1} type="background" speed={0.2}>
         {/* Narrative Text Overlay with Parallax Depth */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none z-40">
           <AnimatePresence mode="wait">
             {activeIdx === 0 && (
-              <NarrativeText key="antes" text="antes..." delay={2} />
+              <NarrativeText key="antes" text="Antes..." delay={0.8} />
             )}
-            {activeIdx === 1 && currentVideos.length > 2 && (
-              <NarrativeText key="hoy" text="hoy..." delay={1.5} />
+            {activeIdx === 1 && finalIdx >= 1 && (
+              <NarrativeText key="atencion" text="Todo compite por tu atención" variant="glitch" delay={0.3} />
             )}
-            {activeIdx === 2 && currentVideos.length > 3 && (
-              <NarrativeText key="cambio" text="todo esta cambiando y vos?..." delay={1} />
+            {activeIdx === 2 && finalIdx >= 2 && (
+              <NarrativeText key="cambio" text="El cambio ya ocurrió" variant="impact" delay={1.2} />
+            )}
+            {isFinalScene && finalIdx > 0 && (
+              <div key="final-sequence" className="contents">
+                {revealStage === 0 && (
+                  <NarrativeText key="proximo" text="Movete a la velocidad de lo que viene" />
+                )}
+                {revealStage === 1 && (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    className="absolute bottom-[18%] left-0 w-full text-center px-8 z-40"
+                  >
+                    <h2 className="font-body font-bold text-[clamp(1.25rem,4.5vw,2.5rem)] text-white tracking-tight leading-tight mx-auto max-w-[90%]">
+                      Adaptate. O quedate atrás.
+                    </h2>
+                  </motion.div>
+                )}
+              </div>
             )}
           </AnimatePresence>
         </div>
@@ -228,7 +361,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
       {/* Layer 3 — Main content (foreground) */}
       <Layer depth={3} type="content">
         <AnimatePresence>
-          {activeIdx === currentVideos.length - 1 && (
+          {(isFinalScene && (revealStage === 2 || finalIdx === 0)) && (
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -277,28 +410,38 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
         </AnimatePresence>
       </Layer>
 
-      {/* Layer 4 — Floating badges */}
-      <Layer depth={4} type="floating" mouseReactive className="hidden md:block">
-        <div className="absolute top-[25%] right-[12%] float-gentle">
-          <div className="bg-white/[0.04] border border-white/10 backdrop-blur-sm rounded-xl px-4 py-3 text-sm">
-            <span className="text-accent font-mono font-bold">+340%</span>
-            <span className="text-muted ml-2">ROI promedio</span>
-          </div>
+      {/* Bottom Interface: Sound Toggle & Scroll Cue */}
+      <div className="absolute bottom-8 left-0 w-full z-50 px-6 md:px-12 flex items-end justify-between pointer-events-none">
+        {/* Subtle Sound Toggle */}
+        <div className="pointer-events-auto">
+          <button
+            onClick={() => setIsMuted(!isMuted)}
+            className="group flex items-center gap-3 transition-colors duration-300"
+            aria-label={isMuted ? "Activar sonido" : "Silenciar"}
+          >
+            <div className="flex items-center gap-[2px] h-3">
+              {[...Array(4)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={isMuted ? { height: 2 } : { height: [4, 12, 6, 12, 4] }}
+                  transition={isMuted ? {} : { duration: 0.8, repeat: Infinity, delay: i * 0.1 }}
+                  className="w-[2px] bg-white/40 group-hover:bg-accent transition-colors"
+                />
+              ))}
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
+              {isMuted ? "Sound Off" : "Sound On"}
+            </span>
+          </button>
         </div>
-        <div className="absolute bottom-[30%] right-[8%] float-gentle-delayed">
-          <div className="bg-white/[0.04] border border-white/10 backdrop-blur-sm rounded-xl px-4 py-3 text-sm">
-            <span className="text-accent font-mono font-bold">200+</span>
-            <span className="text-muted ml-2">clientes</span>
-          </div>
+
+        <div className="hidden md:block">
+          {isFinalScene && <ScrollCue />}
         </div>
-      </Layer>
 
-      {/* Layer 5 — FX (Neutral Glow) */}
-      <Layer depth={5} type="fx" mouseReactive>
-        <div className="absolute top-[20%] left-[15%] w-[300px] h-[300px] rounded-full bg-white/[0.01] blur-[120px]" />
-      </Layer>
-
-      {activeIdx === currentVideos.length - 1 && <ScrollCue />}
+        {/* Placeholder for symmetry or secondary action */}
+        <div className="w-[80px]" />
+      </div>
     </ParallaxSection>
   )
 }

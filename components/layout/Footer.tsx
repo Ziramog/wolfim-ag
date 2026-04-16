@@ -11,7 +11,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <a href="/" className="inline-block mb-6" data-cursor>
               <img 
-                src="/images/desktop/wolfim_logo_header.jpeg" 
+                src="/images/mobile/logo.jpeg" 
                 alt="WOLFIM Logo" 
                 className="h-[60px] w-auto object-contain brightness(0) invert(1)" 
               />
