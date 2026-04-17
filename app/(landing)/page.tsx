@@ -7,7 +7,7 @@ import { Problem } from "@/components/sections/Problem/Problem"
 import { Solution } from "@/components/sections/Solution/Solution"
 import { Proof } from "@/components/sections/Proof/Proof"
 import { LiveFeed } from "@/components/sections/LiveFeed/LiveFeed"
-import { Pricing } from "@/components/sections/Pricing/Pricing"
+import { Portfolio } from "@/components/sections/Portfolio/Portfolio"
 import { CTA } from "@/components/sections/CTA/CTA"
 import { Footer } from "@/components/layout/Footer"
 import { SITE_CONFIG } from "@/lib/config/site"
@@ -25,7 +25,7 @@ export default function HomePage() {
       <Solution {...config.solution} />
       <Proof {...config.proof} />
       <LiveFeed />
-      <Pricing {...config.pricing} />
+      <Portfolio />
       <CTA {...config.cta} />
       <Footer />
     </SmoothScroller>

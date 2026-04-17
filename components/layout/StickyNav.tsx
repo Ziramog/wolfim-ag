@@ -73,7 +73,7 @@ export function StickyNav() {
           {[
             { label: "Servicios", href: "#solution" },
             { label: "Resultados", href: "#proof" },
-            { label: "Planes", href: "#pricing" },
+            { label: "Portfolio", href: "#portfolio" },
           ].map((link) => (
             <a
               key={link.href}

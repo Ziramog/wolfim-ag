@@ -8,7 +8,7 @@ import { Problem } from "@/components/sections/Problem/Problem"
 import { Solution } from "@/components/sections/Solution/Solution"
 import { Proof } from "@/components/sections/Proof/Proof"
 import { LiveFeed } from "@/components/sections/LiveFeed/LiveFeed"
-import { Pricing } from "@/components/sections/Pricing/Pricing"
+import { Portfolio } from "@/components/sections/Portfolio/Portfolio"
 import { CTA } from "@/components/sections/CTA/CTA"
 import { getNicheConfig, validNiches } from "@/lib/config/niches"
 
@@ -53,7 +53,7 @@ export default function NichePage({ params }: Props) {
       <Solution {...nicheConfig.solution} />
       <Proof {...nicheConfig.proof} />
       <LiveFeed />
-      <Pricing {...nicheConfig.pricing} />
+      <Portfolio />
       <CTA {...nicheConfig.cta} />
       <Footer />
     </SmoothScroller>

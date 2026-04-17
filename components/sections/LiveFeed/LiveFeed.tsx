@@ -12,21 +12,21 @@ interface LeadNotif {
 }
 
 const NOTIFICATION_POOL: LeadNotif[] = [
-  { name: "Restaurante El Fogón", city: "Córdoba", service: "Google Ads", time: "hace 2 min" },
-  { name: "Clínica DermaLife", city: "Buenos Aires", service: "SEO", time: "hace 5 min" },
-  { name: "FerreMax", city: "Rosario", service: "Web + SEO", time: "hace 8 min" },
-  { name: "Estudio Contable PMR", city: "Mendoza", service: "Landing Page", time: "hace 12 min" },
-  { name: "Auto Spa Premium", city: "La Plata", service: "Google Ads", time: "hace 15 min" },
-  { name: "Óptica Visual", city: "Tucumán", service: "SEO + Ads", time: "hace 18 min" },
-  { name: "Farmacia del Centro", city: "Santa Fe", service: "WhatsApp Bot", time: "hace 22 min" },
-  { name: "Inmobiliaria Norte", city: "Salta", service: "Web + Ads", time: "hace 25 min" },
-  { name: "Pet Shop Huellitas", city: "Mar del Plata", service: "Redes Sociales", time: "hace 28 min" },
-  { name: "Gym FitZone", city: "Neuquén", service: "Landing + Ads", time: "hace 32 min" },
-  { name: "Consultora RH Plus", city: "CABA", service: "SEO", time: "hace 35 min" },
-  { name: "Panadería La Abuela", city: "Córdoba", service: "Google Ads", time: "hace 38 min" },
-  { name: "Taller Mecánico JR", city: "Bahía Blanca", service: "Web", time: "hace 41 min" },
-  { name: "Centro Odontológico", city: "Resistencia", service: "SEO + Web", time: "hace 45 min" },
-  { name: "Kiosco Digital", city: "Paraná", service: "E-commerce", time: "hace 48 min" },
+  { id: 1, name: "Restaurante El Fogón", city: "Córdoba", service: "Google Ads", time: "hace 2 min" },
+  { id: 2, name: "Clínica DermaLife", city: "Buenos Aires", service: "SEO", time: "hace 5 min" },
+  { id: 3, name: "FerreMax", city: "Rosario", service: "Web + SEO", time: "hace 8 min" },
+  { id: 4, name: "Estudio Contable PMR", city: "Mendoza", service: "Landing Page", time: "hace 12 min" },
+  { id: 5, name: "Auto Spa Premium", city: "La Plata", service: "Google Ads", time: "hace 15 min" },
+  { id: 6, name: "Óptica Visual", city: "Tucumán", service: "SEO + Ads", time: "hace 18 min" },
+  { id: 7, name: "Farmacia del Centro", city: "Santa Fe", service: "WhatsApp Bot", time: "hace 22 min" },
+  { id: 8, name: "Inmobiliaria Norte", city: "Salta", service: "Web + Ads", time: "hace 25 min" },
+  { id: 9, name: "Pet Shop Huellitas", city: "Mar del Plata", service: "Redes Sociales", time: "hace 28 min" },
+  { id: 10, name: "Gym FitZone", city: "Neuquén", service: "Landing + Ads", time: "hace 32 min" },
+  { id: 11, name: "Consultora RH Plus", city: "CABA", service: "SEO", time: "hace 35 min" },
+  { id: 12, name: "Panadería La Abuela", city: "Córdoba", service: "Google Ads", time: "hace 38 min" },
+  { id: 13, name: "Taller Mecánico JR", city: "Bahía Blanca", service: "Web", time: "hace 41 min" },
+  { id: 14, name: "Centro Odontológico", city: "Resistencia", service: "SEO + Web", time: "hace 45 min" },
+  { id: 15, name: "Kiosco Digital", city: "Paraná", service: "E-commerce", time: "hace 48 min" },
 ]
 
 const serviceColors: Record<string, string> = {
@@ -44,6 +44,14 @@ const serviceColors: Record<string, string> = {
   "E-commerce": "text-cyan-400",
 }
 
+interface LeadNotif {
+  id: number
+  name: string
+  city: string
+  service: string
+  time: string
+}
+
 export function LiveFeed() {
   const [queue, setQueue] = useState<LeadNotif[]>([])
 
@@ -54,9 +62,12 @@ export function LiveFeed() {
     }, 1500)
 
     const interval = setInterval(() => {
-      const notif =
+      // Pick a random notification and give it a unique instance ID for the queue
+      const baseNotif =
         NOTIFICATION_POOL[Math.floor(Math.random() * NOTIFICATION_POOL.length)]
-      setQueue((prev) => [notif, ...prev].slice(0, 5))
+      const notif = { ...baseNotif, queueId: Math.random() } // Unique stable key for this instance
+      
+      setQueue((prev) => [notif as any, ...prev].slice(0, 5))
     }, 3200)
 
     return () => {
@@ -89,9 +100,9 @@ export function LiveFeed() {
 
           {/* Right — Live notification feed */}
           <div className="relative">
-            <div className="bg-surface border border-border rounded-2xl p-4 md:p-6 min-h-[320px]">
+            <div className="bg-surface border border-border rounded-2xl p-4 md:p-6 h-[400px] flex flex-col">
               {/* Header */}
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border flex-shrink-0">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-xs font-mono text-muted uppercase tracking-wider">
                   Consultas en vivo
@@ -99,21 +110,20 @@ export function LiveFeed() {
               </div>
 
               {/* Notifications */}
-              <div className="space-y-2 overflow-hidden">
-                <AnimatePresence initial={false}>
-                  {queue.map((notif, i) => (
+              <div className="space-y-2 overflow-hidden flex-1 relative">
+                <AnimatePresence initial={false} mode="popLayout">
+                  {queue.map((notif: any) => (
                     <motion.div
-                      key={`${notif.name}-${i}-${Date.now()}`}
-                      initial={{ opacity: 0, x: 60, scale: 0.9 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                      key={notif.queueId}
+                      initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                       transition={{
                         type: "spring",
-                        damping: 20,
-                        stiffness: 200,
+                        damping: 25,
+                        stiffness: 300,
                       }}
-                      layout
-                      className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]"
+                      className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] h-[64px]"
                     >
                       <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs flex-shrink-0">
                         🔔
