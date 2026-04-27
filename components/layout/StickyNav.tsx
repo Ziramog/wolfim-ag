@@ -87,7 +87,7 @@ export function StickyNav() {
 
           <a
             href="#cta"
-            className="inline-flex items-center px-5 py-2.5 rounded-full bg-accent text-black text-sm font-semibold hover:scale-[1.03] transition-transform"
+            className="inline-flex items-center px-6 py-3 bg-accent text-black text-sm font-semibold hover:bg-accent/90 transition-all"
             data-cursor
           >
             Consultá gratis

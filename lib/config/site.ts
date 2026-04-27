@@ -172,38 +172,38 @@ export const SITE_CONFIG: SiteConfig = {
 
   proof: {
     metrics: [
-      { value: 200, suffix: "+", label: "Clientes con éxito probado" },
-      { value: 340, suffix: "%", label: "ROI promedio (Google Ads)" },
-      { value: 48, suffix: "h", label: "Tiempo para el sitio inicial" },
+      { value: 200, suffix: "+", label: "Clientes activos" },
+      { value: 340, suffix: "%", label: "ROI promedio en Ads" },
+      { value: 48, suffix: "h", label: "Entrega inicial" },
     ],
     testimonials: [
       {
         quote:
-          "En los primeros 90 días triplicamos las consultas calificadas. Su enfoque de ingeniería web convierte visitantes en clientes como nada que hayamos probado antes.",
+          "En 90 días triplicamos las consultas. El enfoque de ingeniería convierte como nada que hayamos probado.",
         author: "Martín Rodríguez",
         company: "Clínica DermaLife",
         result: "+280% consultas",
       },
       {
         quote:
-          "La automatización de WhatsApp redujo nuestro tiempo de respuesta de horas a segundos. No hemos vuelto a perder un solo lead por falta de atención.",
+          "La automatización de WhatsApp redujo nuestro tiempo de respuesta de horas a segundos.",
         author: "Laura Méndez",
         company: "Restaurante El Fogón",
         result: "+45% reservas",
       },
       {
         quote:
-          "Pasamos de la invisibilidad absoluta a dominar los primeros 3 resultados de búsqueda. El crecimiento orgánico se ha convertido en nuestra mayor fuente de ingresos.",
+          "Pasamos de la invisibilidad a dominar los primeros resultados de Google.",
         author: "Carlos Pereyra",
         company: "FerreMax",
-        result: "Top 3 en Google",
+        result: "Top 3 Google",
       },
     ],
   },
 
   caseShowcase: {
-    headline: "Tu negocio merece una web que vende",
-    subheadline: "Cada píxel, cada interacción, cada segundo de carga está diseñado para convertir visitantes en clientes.",
+    headline: "Webs que venden.",
+    subheadline: "Diseñadas para convertir. Construidas para durar.",
   },
 
   portfolio: {

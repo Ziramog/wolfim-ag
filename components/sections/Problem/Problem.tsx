@@ -6,18 +6,18 @@ import type { PainPoint } from "@/lib/config/site"
 
 function PainPointCard({ title, description, index }: PainPoint & { index: number }) {
   return (
-    <FadeIn delay={index * 0.1}>
-      <motion.div
-        className="group relative p-6 md:p-8 bg-surface border border-border hover:border-red-500/20 transition-all duration-300"
-        whileHover={{ x: 2 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        <h3 className="text-lg font-display text-text mb-2">
-          {title}
-        </h3>
-        <p className="text-sm text-muted leading-relaxed">{description}</p>
-      </motion.div>
-    </FadeIn>
+    <motion.div
+      className="group py-10 border-b border-border last:border-b-0"
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.1, duration: 0.6 }}
+    >
+      <h3 className="font-display text-xl md:text-2xl text-text mb-2 group-hover:text-accent transition-colors">
+        {title}
+      </h3>
+      <p className="text-sm text-muted">{description}</p>
+    </motion.div>
   )
 }
 
@@ -28,15 +28,16 @@ interface ProblemProps {
 
 export function Problem({ headline, painPoints }: ProblemProps) {
   return (
-    <section id="problem" className="relative py-section-pad-y bg-bg">
+    <section id="problem" className="relative py-section-pad-y bg-bg bg-grid">
       <div className="max-w-container mx-auto px-6 md:px-12">
         <FadeIn>
-          <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-tight mb-16 md:mb-20">
+          <span className="overline block mb-4">El problema</span>
+          <h2 className="display-xl text-text mb-16 max-w-3xl">
             {headline}
           </h2>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-3xl">
           {painPoints.map((point, i) => (
             <PainPointCard key={point.title} {...point} index={i} />
           ))}

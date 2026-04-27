@@ -8,26 +8,30 @@ interface CaseShowcaseProps {
   subheadline?: string
 }
 
-function CaseVideo({ src }: { src: string }) {
+function CaseVideo({ src, index }: { src: string; index: number }) {
   return (
-    <FadeIn delay={0.1}>
-      <motion.div
-        className="relative w-full max-w-[300px] mx-auto overflow-hidden rounded-lg"
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      >
-        <div className="aspect-[9/16] overflow-hidden">
-          <video
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </motion.div>
-    </FadeIn>
+    <motion.div
+      className="relative flex-1 max-w-[320px] overflow-hidden rounded-2xl"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.2, duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+    >
+      {/* Full vertical video */}
+      <div className="aspect-[9/16] overflow-hidden rounded-2xl">
+        <video
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Bottom fade for text */}
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent" />
+    </motion.div>
   )
 }
 
@@ -38,34 +42,42 @@ export function CaseShowcase({ headline, subheadline }: CaseShowcaseProps) {
   ]
 
   return (
-    <section id="cases" className="relative py-section-pad-y bg-bg">
-      <div className="max-w-container mx-auto px-6 md:px-12">
+    <section id="cases" className="relative min-h-screen flex flex-col justify-center py-section-pad-y bg-bg">
+      {/* Background glow effects */}
+      <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-accent/5 blur-[150px] rounded-full" />
+      <div className="absolute bottom-1/4 right-0 w-[300px] h-[300px] bg-accent-warm/5 blur-[120px] rounded-full" />
+
+      <div className="max-w-container mx-auto px-6 md:px-12 relative z-10">
         <FadeIn>
-          <div className="text-center mb-16">
-            <motion.span
-              className="inline-block text-[10px] uppercase tracking-[0.3em] text-accent mb-4"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              Webs Inmersivas
-            </motion.span>
-            <h2 className="font-display text-[clamp(2rem,4vw,3.5rem)] leading-tight mb-4">
-              {headline}
-            </h2>
-            {subheadline && (
-              <p className="text-muted text-base max-w-xl mx-auto">
-                {subheadline}
-              </p>
-            )}
-          </div>
+          <span className="overline block mb-4">Webs Inmersivas</span>
+          <h2 className="display-xl text-text mb-4 max-w-2xl">
+            {headline}
+          </h2>
+          {subheadline && (
+            <p className="text-muted text-lg max-w-xl mb-16">
+              {subheadline}
+            </p>
+          )}
         </FadeIn>
 
-        <div className="flex flex-col md:flex-row gap-10 justify-center items-center md:items-start">
+        {/* Vertical videos side by side */}
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12 justify-center items-center md:items-stretch">
           {cases.map((c, i) => (
-            <CaseVideo key={i} src={c.src} />
+            <CaseVideo key={i} src={c.src} index={i} />
           ))}
         </div>
+
+        {/* Bottom CTA */}
+        <FadeIn delay={0.4}>
+          <div className="text-center mt-16">
+            <p className="text-muted text-sm">
+              ¿Querés ver más?{" "}
+              <span className="text-accent hover-line cursor-pointer">
+                Ver portfolio completo →
+              </span>
+            </p>
+          </div>
+        </FadeIn>
       </div>
     </section>
   )
