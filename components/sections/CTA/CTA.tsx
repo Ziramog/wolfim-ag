@@ -120,9 +120,13 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: "spring", damping: 15 }}
-                  className="bg-surface/80 backdrop-blur-xl border border-accent/20 rounded-2xl p-8 md:p-12"
+                  className="bg-surface/80 backdrop-blur-xl border border-accent/20 p-8 md:p-12"
                 >
-                  <div className="text-6xl mb-4">🎉</div>
+                  <div className="w-12 h-12 mb-6 text-accent">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
                   <h3 className="text-2xl font-display text-text mb-2">
                     ¡Recibimos tu consulta!
                   </h3>

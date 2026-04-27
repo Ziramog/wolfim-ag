@@ -49,7 +49,7 @@ function TestimonialCard({ quote, author, company, result }: TestimonialData) {
           <p className="text-sm font-semibold text-text">{author}</p>
           <p className="text-xs text-muted">{company}</p>
         </div>
-        <span className="text-xs font-mono text-accent bg-accent/10 px-2.5 py-1 rounded-full">
+        <span className="text-xs font-mono text-accent border border-accent/20 px-2.5 py-1 uppercase tracking-wider">
           {result}
         </span>
       </div>

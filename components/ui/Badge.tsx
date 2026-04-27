@@ -2,18 +2,20 @@ import { cn } from "@/lib/utils/cn"
 
 interface BadgeProps {
   children: React.ReactNode
-  variant?: "default" | "accent" | "warm"
+  variant?: "default" | "accent" | "warm" | "overline"
   className?: string
 }
 
+// Editorial badge — no rounded-full, category tag style
 export function Badge({ children, variant = "default", className }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider",
-        variant === "default" && "bg-white/5 text-muted border border-border",
-        variant === "accent" && "bg-accent/10 text-accent border border-accent/20",
-        variant === "warm" && "bg-accent-warm/10 text-accent-warm border border-accent-warm/20",
+        "inline-block font-mono text-[10px] tracking-[0.15em] uppercase",
+        variant === "default" && "text-muted",
+        variant === "accent" && "text-accent",
+        variant === "warm" && "text-accent-warm",
+        variant === "overline" && "text-white/40 border-b border-white/20 pb-0.5",
         className
       )}
     >

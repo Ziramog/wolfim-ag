@@ -125,8 +125,10 @@ export function LiveFeed() {
                       }}
                       className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] h-[64px]"
                     >
-                      <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs flex-shrink-0">
-                        🔔
+                      <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-4 h-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+                        </svg>
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-text truncate font-medium">
