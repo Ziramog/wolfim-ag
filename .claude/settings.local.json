@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"C:/Users/ingju/Downloads/video 1.mp4\" \"F:/wolfim-ag/public/videos/cases/case-1.mp4\")",
+      "Bash(cp \"C:/Users/ingju/Downloads/video 2.mp4\" \"F:/wolfim-ag/public/videos/cases/case-2.mp4\")",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: add CaseShowcase section with immersive video cases *)",
+      "Bash(git push *)"
+    ]
+  }
+}

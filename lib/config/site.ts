@@ -59,6 +59,11 @@ export interface PortfolioItem {
   tags: string[]
 }
 
+export interface CaseShowcaseData {
+  headline: string
+  subheadline?: string
+}
+
 export interface PortfolioData {
   headline: string
   items: PortfolioItem[]
@@ -69,6 +74,7 @@ export interface SiteConfig {
   problem: { headline: string; painPoints: PainPoint[] }
   solution: { headline: string; services: ServiceData[] }
   proof: { metrics: MetricData[]; testimonials: TestimonialData[] }
+  caseShowcase: CaseShowcaseData
   portfolio: PortfolioData
   pricing: { headline: string; tiers: PricingTier[] }
   cta: CTAData
@@ -205,6 +211,11 @@ export const SITE_CONFIG: SiteConfig = {
         result: "Top 3 en Google",
       },
     ],
+  },
+
+  caseShowcase: {
+    headline: "Tu negocio merece una web que vende",
+    subheadline: "Cada píxel, cada interacción, cada segundo de carga está diseñado para convertir visitantes en clientes.",
   },
 
   portfolio: {

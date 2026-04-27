@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils/cn"
 import type { HeroData } from "@/lib/config/site"
 
 const DESKTOP_VIDEOS = [
-  "/videos/desktop/hero_video_D.mp4",
   "/videos/desktop/hero_video_D_1.mp4",
 ]
 
@@ -135,6 +134,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   const [revealStage, setRevealStage] = useState(0)
   const [isGlitching, setIsGlitching] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [skippedIntro, setSkippedIntro] = useState(false)
   const videoRef1 = useRef<HTMLVideoElement>(null)
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const videoRef3 = useRef<HTMLVideoElement>(null)
@@ -434,6 +434,33 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
             </span>
           </button>
         </div>
+
+        {/* Skip Intro — Mobile only, glass style */}
+        {isMobile && activeIdx < finalIdx && (
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+            onClick={() => {
+              const finalRef = [videoRef1, videoRef2, videoRef3, videoRef4][finalIdx]?.current
+              if (finalRef) {
+                finalRef.currentTime = 0
+                finalRef.play().catch(() => {})
+              }
+              setActiveIdx(finalIdx)
+              setSkippedIntro(true)
+            }}
+            className="pointer-events-auto backdrop-blur-md bg-white/[0.08] border border-white/[0.15] rounded-full px-4 py-2 flex items-center gap-2 hover:bg-white/[0.12] transition-all duration-300 group"
+          >
+            <span className="text-[10px] uppercase tracking-[0.15em] text-white/60 group-hover:text-white transition-colors">
+              Saltar intro
+            </span>
+            <svg className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </motion.button>
+        )}
 
         <div className="hidden md:block">
           {isFinalScene && <ScrollCue />}
