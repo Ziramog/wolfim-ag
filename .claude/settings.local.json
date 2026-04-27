@@ -7,7 +7,11 @@
       "Bash(git commit -m 'feat: add CaseShowcase section with immersive video cases *)",
       "Bash(git push *)",
       "Bash(npm run *)",
-      "Bash(git commit -m 'refactor: editorial system overhaul — clean, intentional, no emoji *)"
+      "Bash(git commit -m 'refactor: editorial system overhaul — clean, intentional, no emoji *)",
+      "Bash(file public/videos/cases/case-1.mp4 public/videos/cases/case-2.mp4)",
+      "Bash(powershell -Command \"ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 public/videos/cases/case-1.mp4\")",
+      "Bash(powershell -Command \"ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 public/videos/cases/case-2.mp4\")",
+      "Bash(git commit -m 'refactor: lean editorial — headlines + bullets, no icons, vertical video cases *)"
     ]
   }
 }

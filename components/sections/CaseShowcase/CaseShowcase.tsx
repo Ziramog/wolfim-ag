@@ -8,43 +8,23 @@ interface CaseShowcaseProps {
   subheadline?: string
 }
 
-function CaseVideo({ src, title }: { src: string; title: string }) {
+function CaseVideo({ src }: { src: string }) {
   return (
     <FadeIn delay={0.1}>
       <motion.div
-        className="group relative rounded-2xl overflow-hidden bg-surface border border-border cursor-pointer"
-        whileHover={{ y: -4 }}
+        className="relative w-full max-w-[300px] mx-auto overflow-hidden rounded-lg"
+        whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
-        {/* Video container */}
-        <div className="relative aspect-[16/9] overflow-hidden">
+        <div className="aspect-[9/16] overflow-hidden">
           <video
             src={src}
             autoPlay
             muted
             loop
             playsInline
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            className="w-full h-full object-cover"
           />
-
-          {/* Glass overlay on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Play indicator */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Title bar */}
-        <div className="p-5 border-t border-border">
-          <h3 className="font-body font-semibold text-lg text-text">
-            {title}
-          </h3>
         </div>
       </motion.div>
     </FadeIn>
@@ -53,22 +33,13 @@ function CaseVideo({ src, title }: { src: string; title: string }) {
 
 export function CaseShowcase({ headline, subheadline }: CaseShowcaseProps) {
   const cases = [
-    {
-      src: "/videos/cases/case-1.mp4",
-      title: "Caso de Éxito #1",
-    },
-    {
-      src: "/videos/cases/case-2.mp4",
-      title: "Caso de Éxito #2",
-    },
+    { src: "/videos/cases/case-1.mp4" },
+    { src: "/videos/cases/case-2.mp4" },
   ]
 
   return (
     <section id="cases" className="relative py-section-pad-y bg-bg">
-      {/* Subtle accent glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/5 blur-[150px] rounded-full" />
-
-      <div className="max-w-container mx-auto px-6 md:px-12 relative">
+      <div className="max-w-container mx-auto px-6 md:px-12">
         <FadeIn>
           <div className="text-center mb-16">
             <motion.span
@@ -83,35 +54,18 @@ export function CaseShowcase({ headline, subheadline }: CaseShowcaseProps) {
               {headline}
             </h2>
             {subheadline && (
-              <p className="text-muted text-lg max-w-2xl mx-auto mt-4">
+              <p className="text-muted text-base max-w-xl mx-auto">
                 {subheadline}
               </p>
             )}
           </div>
         </FadeIn>
 
-        {/* Video showcase — stacked vertically */}
-        <div className="flex flex-col gap-8 max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-10 justify-center items-center md:items-start">
           {cases.map((c, i) => (
-            <CaseVideo key={i} src={c.src} title={c.title} />
+            <CaseVideo key={i} src={c.src} />
           ))}
         </div>
-
-        {/* CTA hint */}
-        <FadeIn delay={0.3}>
-          <div className="text-center mt-12">
-            <p className="text-muted text-sm">
-              ¿Querés ver más casos?{" "}
-              <motion.span
-                className="text-accent cursor-pointer hover:underline"
-                whileHover={{ x: 2 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                Ver portfolio completo →
-              </motion.span>
-            </p>
-          </div>
-        </FadeIn>
       </div>
     </section>
   )
