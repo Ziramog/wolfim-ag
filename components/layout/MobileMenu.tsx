@@ -50,9 +50,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           transition={{ duration: 0.3 }}
           className={cn(
             "fixed inset-0 z-[200] flex flex-col justify-end",
-            // Glass black background
-            "bg-black/80",
-            "backdrop-blur-xl",
+            // Glass black background — transparent to show hero behind
+            "bg-black/40",
+            "backdrop-blur-2xl",
             "border-t border-white/[0.08]"
           )}
         >
@@ -79,8 +79,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           </div>
 
           {/* Menu items */}
-          <nav className="px-6 pb-[15vh] pt-24">
-            <ul className="space-y-2">
+          <nav className="px-3 pb-[15vh] pt-24">
+            <ul className="space-y-1">
               {menuItems.map((item, i) => (
                 <motion.li
                   key={item.href}
@@ -97,8 +97,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     href={item.href}
                     onClick={handleLinkClick}
                     className={cn(
-                      "block py-4 text-4xl md:text-5xl font-display",
-                      "text-white/80 hover:text-white",
+                      "block py-3 text-3xl md:text-4xl font-display",
+                      "text-white/70 hover:text-white",
                       "transition-colors duration-300",
                       "border-b border-white/[0.05] last:border-b-0"
                     )}
@@ -127,7 +127,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className={cn(
                   "inline-flex items-center gap-3",
                   "px-8 py-4 rounded-full",
-                  "bg-accent text-black font-semibold text-lg",
+                  "bg-accent text-black font-semibold text-base",
                   "hover:bg-accent/90 transition-all"
                 )}
               >
