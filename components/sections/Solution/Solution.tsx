@@ -13,9 +13,12 @@ function ServiceCard({ service, index }: { service: ServiceData; index: number }
       >
         <div className="flex items-start justify-between gap-6">
           <div className="flex-1">
-            <h3 className="font-display text-2xl md:text-3xl text-text mb-4 group-hover:text-accent transition-colors">
+            <h3 className="font-display text-2xl md:text-3xl text-text mb-3 group-hover:text-accent transition-colors">
               {service.label}
             </h3>
+            <p className="text-sm text-muted mb-4 leading-relaxed">
+              {service.description}
+            </p>
             <ul className="space-y-2">
               {service.outcomes.map((outcome, i) => (
                 <li key={i} className="text-sm text-muted flex items-center gap-2">
@@ -49,7 +52,7 @@ export function Solution({ headline, services }: SolutionProps) {
     >
       <div className="max-w-container mx-auto px-6 md:px-12">
         <FadeIn>
-          <span className="overline block mb-4">Sistema Integrado</span>
+          <span className="overline block mb-4">Lo que hacemos</span>
           <h2 className="display-xl text-text mb-16 max-w-3xl">
             {headline}
           </h2>

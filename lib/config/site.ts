@@ -66,87 +66,91 @@ export interface SiteConfig {
 
 export const SITE_CONFIG: SiteConfig = {
   hero: {
-    headline: "Tu empresa merece clientes reales.",
+    headline: "Creamos Dependadores.",
     subheadline:
-      "Diseñamos el sistema completo de captación para empresas de élite: web cinematográfica, SEO avanzado, Google Ads y automatización inteligente.",
-    ctaLabel: "Quiero resultados ahora",
+      "Diseños web inmersivos. Dominio SEO. Ads que convierten. WhatsApp en piloto automático. Tu negocio deja de ser invisible hoy.",
+    ctaLabel: "Empezá a Cazar",
     ctaHref: "#cta",
-    badge: "Ingeniería de crecimiento digital",
+    badge: "Diseño Web + SEO + Ads + Automatización",
   },
 
   problem: {
-    headline: "¿Tu negocio está estancado o escalando?",
+    headline: "El problema es que no te encuentran.",
     painPoints: [
       {
         icon: "",
-        title: "Marketing sin retorno",
-        description: "Campañas que no convierten. Si no hay datos, hay apuesta.",
+        title: "Tu web se ve igual que",
+        description: "la de todos. Sin diferenciación. Sin identidad. Sin presencia real.",
       },
       {
         icon: "",
-        title: "Tu web no vende",
-        description: "Bonito no es suficiente. Si no convierte, es gasto.",
+        title: "Tus competidores aparecen primero en",
+        description: "Google. Si no eres primero, eres invisible para el 75% de tus prospects.",
       },
       {
         icon: "",
-        title: "Tu competencia avanza",
-        description: "Mientras dudás, otros captan a tus clientes.",
+        title: "Tus leads se enfrían porque",
+        description: "respondés tarde. 5 minutos de demora = 80% menos chance de cerrar.",
       },
       {
         icon: "",
-        title: "Leads que se enfrían",
-        description: "5 minutos de espera = 80% menos conversión.",
+        title: "No sos un depredador.",
+        description: "Eres presa. Y tus competidores lo saben.",
       },
     ],
   },
 
   solution: {
-    headline: "Tu ecosistema de crecimiento",
+    headline: "Cinco armas. Un arsenal depredador.",
     services: [
       {
         id: "web",
-        label: "Websites de Autoridad",
-        description: "",
+        label: "Diseño Web Inmersivo",
+        description:
+          "Websites full-bleed, con video y scroll-triggered que hacen que los visitantes dejen de scrollear y empiecen a comprar. No templates. Experiencias que convierten.",
         outcomes: [
-          "LCP < 1.2s",
-          "Diseño cinematográfico",
-          "Mobile-first",
+          "Webs con video background",
+          "Scroll cinematico",
+          "Tasa conversión +180%",
         ],
         accentColor: "var(--color-accent)",
         icon: "",
       },
       {
         id: "seo",
-        label: "SEO de Dominio",
-        description: "",
+        label: "Posicionamiento SEO",
+        description:
+          "SEO técnico, estrategia de contenido y construcción de autoridad que te pone arriba en los resultados. Si no eres primero, eres último.",
         outcomes: [
-          "Auditoría técnica",
+          "Auditoría técnica completa",
           "Contenido optimizado",
-          "Link building",
+          "Top 3 Google",
         ],
         accentColor: "var(--color-accent)",
         icon: "",
       },
       {
         id: "ads",
-        label: "Ads de Alto Rendimiento",
-        description: "",
+        label: "Gestión de Google Ads",
+        description:
+          "Arquitectura de campañas data-driven que convierte gasto en revenue. Cada click trackeado. Cada dólar optimizado. Cero desperdicio.",
         outcomes: [
-          "+340% ROI",
+          "ROI 5x en 90 días",
           "CPL optimizado",
-          "Audiencias segmentadas",
+          "每点击付费降低60%",
         ],
         accentColor: "var(--color-accent-warm)",
         icon: "",
       },
       {
         id: "automation",
-        label: "Automatización de Conversión",
-        description: "",
+        label: "Automatización WhatsApp",
+        description:
+          "Calificación automática de leads, respuestas instantáneas y secuencias de nurture. Tu equipo de ventas nunca duerme. Tus leads nunca se enfrían.",
         outcomes: [
-          "Respuesta < 5 seg",
-          "Lead scoring",
-          "CRM integrado",
+          "Respuesta en 2 segundos",
+          "Lead scoring automático",
+          "Cierre +200%",
         ],
         accentColor: "var(--color-accent)",
         icon: "",
@@ -156,31 +160,31 @@ export const SITE_CONFIG: SiteConfig = {
 
   proof: {
     metrics: [
-      { value: 200, suffix: "+", label: "Clientes activos" },
       { value: 340, suffix: "%", label: "ROI promedio en Ads" },
-      { value: 48, suffix: "h", label: "Entrega inicial" },
+      { value: 200, suffix: "+", label: "Negocios transformados" },
+      { value: 90, suffix: "días", label: "Para ver resultados" },
     ],
     testimonials: [
       {
         quote:
-          "En 90 días triplicamos las consultas. El enfoque de ingeniería convierte como nada que hayamos probado.",
-        author: "Martín Rodríguez",
-        company: "Clínica DermaLife",
-        result: "+280% consultas",
+          "WOLFIM no solo rediseñó nuestra web — reconstruyó todo nuestro modelo de ingresos. Pasamos de invisibles a líderes del mercado en 6 meses.",
+        author: "Martín Reyes",
+        company: "CEO, Nexus Fitness",
+        result: "+340% tráfico",
       },
       {
         quote:
-          "La automatización de WhatsApp redujo nuestro tiempo de respuesta de horas a segundos.",
-        author: "Laura Méndez",
-        company: "Restaurante El Fogón",
-        result: "+45% reservas",
+          "Nuestros Google Ads estaban quemando plata. WOLFIM los convirtió en nuestro canal #1 de revenue. El ROI pasó de 0.8x a 5x en 90 días.",
+        author: "Sofía Delgado",
+        company: "Fundadora, Aura Beauty",
+        result: "ROI 5x en Ads",
       },
       {
         quote:
-          "Pasamos de la invisibilidad a dominar los primeros resultados de Google.",
-        author: "Carlos Pereyra",
-        company: "FerreMax",
-        result: "Top 3 Google",
+          "Solo la automatización de WhatsApp pagó todo. Ahora respondemos en 2 segundos. Nuestra tasa de cierre se triplicó.",
+        author: "Diego Martínez",
+        company: "Director, Titan Industrial",
+        result: "+200% cierre",
       },
     ],
   },
@@ -191,57 +195,56 @@ export const SITE_CONFIG: SiteConfig = {
   },
 
   pricing: {
-    headline: "Planes diseñados para escalar",
+    headline: "Elegí tu arma.",
     tiers: [
       {
-        name: "Starter",
+        name: "Wolf Pup",
         price: { monthly: 500, annual: 400 },
-        description: "Fundación digital de alta autoridad",
+        description: "Para negocios listos para dejar de ser invisibles.",
         features: [
-          "Landing page cinematográfica",
-          "SEO técnico on-page inicial",
-          "Google Analytics + Seguimiento de leads",
-          "Soporte profesional por email",
+          "Landing page inmersiva",
+          "SEO básico inicial",
+          "Google Analytics",
+          "30 días de soporte",
         ],
-        ctaLabel: "Iniciar ahora",
+        ctaLabel: "Empezar",
       },
       {
-        name: "Crecimiento",
+        name: "Alpha Wolf",
         price: { monthly: 1200, annual: 960 },
-        description: "Motor completo de captación",
+        description: "El paquete depredador completo. El más elegido.",
         features: [
-          "Todo lo incluido en Starter",
+          "Website inmersivo completo",
           "SEO avanzado + Estrategia de contenido",
-          "Gestión experta de Google Ads",
-          "Sistema de respuesta automatizada",
-          "Dashboard de métricas en tiempo real",
-          "Soporte técnico prioritario",
+          "Gestión de Google Ads",
+          "Automatización WhatsApp",
+          "Dashboard de métricas",
+          "90 días de soporte",
         ],
         featured: true,
-        ctaLabel: "Elegir Crecimiento",
+        ctaLabel: "Elegir Alpha Wolf",
       },
       {
-        name: "Scale",
+        name: "Wolf Pack",
         price: { monthly: 2500, annual: 2000 },
-        description: "Dominio de mercado + Automatización Total",
+        description: "Dominio de mercado. Todo, amplificado.",
         features: [
-          "Todo lo incluido en Crecimiento",
-          "Automatización de flujo de ventas avanzada",
-          "A/B testing y optimización continua",
-          "Gestión de canales múltiples (Ads + Social)",
-          "Integración profunda con CRM",
+          "Website premium + video",
+          "Dominación SEO completa",
+          "Ads multi-plataforma",
+          "Automatización avanzada + CRM",
           "Account Manager dedicado",
-          "Reportes estratégicos semanales",
+          "6 meses de soporte prioritario",
         ],
-        ctaLabel: "Hablemos de escala",
+        ctaLabel: "Hablemos",
       },
     ],
   },
 
   cta: {
-    headline: "Tu próximo gran salto comienza aquí.",
+    headline: "Dejá de ser invisible.",
     subheadline:
-      "Reserva tu diagnóstico gratuito ahora. Respuesta garantizada en menos de 24 horas. Sin compromisos, solo estrategia.",
-    ctaLabel: "Obtener mi diagnóstico gratis",
+      "Tus competidores no esperan. Cada día que seguís invisible es un día que ellos ganan. Reservá tu diagnóstico gratuito — sin compromiso, solo estrategia.",
+    ctaLabel: "Empezá a Cazar Hoy",
   },
 }
