@@ -50,7 +50,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[199] bg-black/20 backdrop-blur-sm"
+            className="fixed inset-0 z-[199] bg-black/10 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -62,15 +62,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
               "fixed inset-[10px] z-[200]",
-              "bg-black/50 backdrop-blur-3xl",
-              "border border-white/[0.08]"
+              "bg-black/30 backdrop-blur-3xl",
+              "border border-white/[0.15]"
             )}
           >
             {/* Close button */}
             <div className="absolute top-5 right-5">
               <button
                 onClick={onClose}
-                className="w-10 h-10 flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-10 h-10 flex items-center justify-center border border-white/20 bg-white/10 hover:bg-white/15 transition-colors"
                 aria-label="Cerrar menú"
               >
                 <svg
@@ -110,7 +110,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         "block py-4 text-2xl md:text-3xl font-display",
                         "text-white/70 hover:text-white",
                         "transition-colors duration-300",
-                        "border-b border-white/[0.06] last:border-b-0"
+                        "border-b border-white/[0.1] last:border-b-0"
                       )}
                     >
                       {item.label}
