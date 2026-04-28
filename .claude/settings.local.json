@@ -15,7 +15,9 @@
       "WebFetch(domain:designfast-demo.framer.website)",
       "mcp__claude_ai_Figma__get_screenshot",
       "Bash(rm -f check-videos.js)",
-      "Bash(git commit -m 'feat: framer-style template aesthetic applied *)"
+      "Bash(git commit -m 'feat: framer-style template aesthetic applied *)",
+      "Bash(npx tsc *)",
+      "Bash(git commit *)"
     ]
   }
 }

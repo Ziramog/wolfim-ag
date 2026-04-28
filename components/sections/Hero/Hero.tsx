@@ -195,9 +195,9 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   }
 
   return (
-    <section id="hero" className="relative" style={{ height: "300vh" }}>
+    <section id="hero" className="relative z-0" style={{ height: "300vh" }}>
       {/* Sticky viewport — the hero stays fixed while content scrolls over it */}
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-screen">
 
         {/* Layer 0 — Cinematic Video Playlist with Crossfade */}
         <div className="relative w-full h-full bg-black overflow-hidden">
