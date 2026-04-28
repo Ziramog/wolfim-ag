@@ -56,23 +56,21 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
           {/* Floating glass panel */}
           <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.96 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "fixed bottom-0 left-0 right-0 z-[200]",
-              "mx-3 mb-3 rounded-3xl",
-              "bg-black/60 backdrop-blur-2xl",
-              "border border-white/[0.1]",
-              "shadow-2xl shadow-black/50"
+              "fixed inset-[10px] z-[200]",
+              "bg-black/50 backdrop-blur-3xl",
+              "border border-white/[0.08]"
             )}
           >
             {/* Close button */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-5 right-5">
               <button
                 onClick={onClose}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-10 h-10 flex items-center justify-center border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
                 aria-label="Cerrar menú"
               >
                 <svg
@@ -91,7 +89,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </div>
 
             {/* Menu content */}
-            <nav className="px-8 pt-14 pb-10">
+            <nav className="px-10 pt-16 pb-12">
               <ul className="space-y-1">
                 {menuItems.map((item, i) => (
                   <motion.li
@@ -109,7 +107,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       href={item.href}
                       onClick={handleLinkClick}
                       className={cn(
-                        "block py-3 text-2xl md:text-3xl font-display",
+                        "block py-4 text-2xl md:text-3xl font-display",
                         "text-white/70 hover:text-white",
                         "transition-colors duration-300",
                         "border-b border-white/[0.06] last:border-b-0"
