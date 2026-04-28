@@ -16,17 +16,19 @@ export default function HomePage() {
   const config = SITE_CONFIG
 
   return (
-    <SmoothScroller>
+    <>
       <CursorFollower />
       <StickyNav />
       <Hero {...config.hero} />
-      <Problem {...config.problem} />
-      <Solution {...config.solution} />
-      <Proof {...config.proof} />
-      <CaseShowcase {...config.caseShowcase} />
-      <LiveFeed />
-      <CTA {...config.cta} />
-      <Footer />
-    </SmoothScroller>
+      <SmoothScroller>
+        <Problem {...config.problem} />
+        <Solution {...config.solution} />
+        <Proof {...config.proof} />
+        <CaseShowcase {...config.caseShowcase} />
+        <LiveFeed />
+        <CTA {...config.cta} />
+        <Footer />
+      </SmoothScroller>
+    </>
   )
 }
