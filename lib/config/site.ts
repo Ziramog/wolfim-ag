@@ -49,24 +49,9 @@ export interface CTAData {
   ctaLabel: string
 }
 
-export interface PortfolioItem {
-  id: string
-  title: string
-  category: string
-  description: string
-  image: string
-  href: string
-  tags: string[]
-}
-
 export interface CaseShowcaseData {
   headline: string
   subheadline?: string
-}
-
-export interface PortfolioData {
-  headline: string
-  items: PortfolioItem[]
 }
 
 export interface SiteConfig {
@@ -75,7 +60,6 @@ export interface SiteConfig {
   solution: { headline: string; services: ServiceData[] }
   proof: { metrics: MetricData[]; testimonials: TestimonialData[] }
   caseShowcase: CaseShowcaseData
-  portfolio: PortfolioData
   pricing: { headline: string; tiers: PricingTier[] }
   cta: CTAData
 }
@@ -204,30 +188,6 @@ export const SITE_CONFIG: SiteConfig = {
   caseShowcase: {
     headline: "Webs que venden.",
     subheadline: "Diseñadas para convertir. Construidas para durar.",
-  },
-
-  portfolio: {
-    headline: "Casos de Éxito",
-    items: [
-      {
-        id: "construvial",
-        title: "Construvial",
-        category: "Infraestructura & Vialidad",
-        description: "Transformación digital para gigantes de la ingeniería civil. Optimizamos su presencia para reflejar 35 años de solidez.",
-        image: "/images/portfolio/construvial.png",
-        href: "https://construvial.vercel.app",
-        tags: ["Next.js", "SEO Industrial", "Estrategia de Marca"]
-      },
-      {
-        id: "korantis",
-        title: "Korantis",
-        category: "Sistemas & Inteligencia",
-        description: "Diseño de ecosistemas operativos de alta escala. Traducimos procesos complejos en interfaces de autoridad técnica.",
-        image: "/images/portfolio/korantis.png",
-        href: "https://korantis.vercel.app",
-        tags: ["SaaS Architecture", "User Experience", "Scale Ops"]
-      }
-    ]
   },
 
   pricing: {

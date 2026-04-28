@@ -67,17 +67,6 @@ export function CaseShowcase({ headline, subheadline }: CaseShowcaseProps) {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <FadeIn delay={0.4}>
-          <div className="text-center mt-16">
-            <p className="text-muted text-sm">
-              ¿Querés ver más?{" "}
-              <span className="text-accent hover-line cursor-pointer">
-                Ver portfolio completo →
-              </span>
-            </p>
-          </div>
-        </FadeIn>
       </div>
     </section>
   )

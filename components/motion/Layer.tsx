@@ -65,8 +65,8 @@ export function Layer({
     offset: ["start end", "end start"],
   })
 
-  const yRange = effectiveSpeed * 200
-  const xRange = effectiveSpeed * 100
+  const yRange = effectiveSpeed * 400
+  const xRange = effectiveSpeed * 200
 
   const y = useTransform(
     scrollYProgress,
@@ -87,12 +87,12 @@ export function Layer({
   useEffect(() => {
     if (!mouseReactive || isMobile || reducedMotion) return
 
-    const sensitivity = (depth - 2.5) * 8
+    const sensitivity = (depth - 2.5) * 16
     const handleMouseMove = (e: MouseEvent) => {
       const centerX = window.innerWidth / 2
       const centerY = window.innerHeight / 2
-      mouseX.set((e.clientX - centerX) * sensitivity * 0.01)
-      mouseY.set((e.clientY - centerY) * sensitivity * 0.01)
+      mouseX.set((e.clientX - centerX) * sensitivity * 0.02)
+      mouseY.set((e.clientY - centerY) * sensitivity * 0.02)
     }
 
     window.addEventListener("mousemove", handleMouseMove)
@@ -113,7 +113,7 @@ export function Layer({
   }
 
   // Mobile: reduce intensity
-  const mobileMultiplier = isMobile ? 0.3 : 1
+  const mobileMultiplier = isMobile ? 0.6 : 1
   const yMobile = useTransform(y, (v) => v * mobileMultiplier)
 
   return (

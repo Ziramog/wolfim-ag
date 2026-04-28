@@ -1,9 +1,7 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ParallaxSection } from "@/components/motion/ParallaxSection"
-import { Layer } from "@/components/motion/Layer"
 import { Badge } from "@/components/ui/Badge"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils/cn"
@@ -68,15 +66,15 @@ const narrativeVariants = {
   },
   glitch: {
     initial: { opacity: 0, x: -10, filter: "blur(8px)" },
-    animate: { 
-      opacity: 1, 
-      x: [0, -2, 2, 0], 
+    animate: {
+      opacity: 1,
+      x: [0, -2, 2, 0],
       filter: "blur(0px)",
     },
     exit: { opacity: 0, filter: "blur(8px)" },
-    transition: { 
-      duration: 0.8, 
-      x: { repeat: 1, duration: 0.1, ease: "linear" } 
+    transition: {
+      duration: 0.8,
+      x: { repeat: 1, duration: 0.1, ease: "linear" }
     }
   },
   impact: {
@@ -87,17 +85,17 @@ const narrativeVariants = {
   }
 }
 
-function NarrativeText({ 
-  text, 
+function NarrativeText({
+  text,
   variant = "soft",
-  delay = 0 
-}: { 
-  text: string; 
+  delay = 0
+}: {
+  text: string;
   variant?: keyof typeof narrativeVariants;
-  delay?: number 
+  delay?: number
 }) {
   const currentVariant = narrativeVariants[variant]
-  
+
   return (
     <motion.div
       key={text}
@@ -135,10 +133,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   const [isGlitching, setIsGlitching] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [skippedIntro, setSkippedIntro] = useState(false)
-  const videoRef1 = useRef<HTMLVideoElement>(null)
-  const videoRef2 = useRef<HTMLVideoElement>(null)
-  const videoRef3 = useRef<HTMLVideoElement>(null)
-  const videoRef4 = useRef<HTMLVideoElement>(null)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
   const currentVideos = isMobile ? MOBILE_VIDEOS : DESKTOP_VIDEOS
   const finalIdx = currentVideos.length - 1
@@ -153,35 +148,31 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
 
   useEffect(() => {
     const isReveal = activeIdx === currentVideos.length - 1
-    window.dispatchEvent(new CustomEvent("wolfimNarrativeState", { 
-      detail: { isReveal } 
+    window.dispatchEvent(new CustomEvent("wolfimNarrativeState", {
+      detail: { isReveal }
     }))
   }, [activeIdx, currentVideos.length])
 
   const handleVideoEnd = () => {
-    // Only continue narrative if there are more videos
     if (activeIdx < finalIdx) {
       const nextIdx = activeIdx + 1
-      
+
       if (activeIdx === 0 && nextIdx === 1) {
         setIsGlitching(true)
         setTimeout(() => setIsGlitching(false), 400)
       }
 
       setRevealStage(0)
-      
-      const refs = [videoRef1, videoRef2, videoRef3, videoRef4]
-      const nextRef = refs[nextIdx]?.current
-      
+
+      const nextRef = videoRefs.current[nextIdx]
+
       if (nextRef && nextRef.src) {
         nextRef.currentTime = 0
         nextRef.play().catch(() => {})
       }
       setActiveIdx(nextIdx)
     } else {
-      // Loop the final scene
-      const refs = [videoRef1, videoRef2, videoRef3, videoRef4]
-      const finalRef = refs[finalIdx]?.current
+      const finalRef = videoRefs.current[finalIdx]
       if (finalRef && finalRef.src) {
         finalRef.currentTime = 0
         finalRef.play().catch(() => {})
@@ -189,26 +180,31 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
     }
   }
 
-  // Timer-based revealed for Scene 4 sub-stages
   useEffect(() => {
     if (isFinalScene) {
-      const t1 = setTimeout(() => setRevealStage(1), 3000) // "Adaptate"
-      const t2 = setTimeout(() => setRevealStage(2), 6500) // Hero UI
+      const t1 = setTimeout(() => setRevealStage(1), 3000)
+      const t2 = setTimeout(() => setRevealStage(2), 6500)
       return () => { clearTimeout(t1); clearTimeout(t2); }
     } else {
       setRevealStage(0)
     }
   }, [activeIdx, isFinalScene])
 
+  const setVideoRef = (index: number) => (el: HTMLVideoElement | null) => {
+    videoRefs.current[index] = el
+  }
+
   return (
-    <ParallaxSection className="h-screen min-h-[600px]" id="hero">
-      {/* Layer 0 — Cinematic Video Playlist with Crossfade */}
-      <Layer depth={0} type="background" blur={false} scale>
+    <section id="hero" className="relative" style={{ height: "300vh" }}>
+      {/* Sticky viewport — the hero stays fixed while content scrolls over it */}
+      <div className="sticky top-0 h-screen overflow-hidden">
+
+        {/* Layer 0 — Cinematic Video Playlist with Crossfade */}
         <div className="relative w-full h-full bg-black overflow-hidden">
           {/* Global Transition Effects (Glitch/Flash) */}
           <AnimatePresence>
             {isGlitching && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 0.5, 1, 0] }}
                 className="absolute inset-0 z-50 bg-white/20 backdrop-invert-[0.2]"
@@ -220,18 +216,18 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
           {/* Scene-specific Overlays */}
           <div className="absolute inset-0 z-20 pointer-events-none">
             <AnimatePresence mode="wait">
-                <motion.div 
-                  key="analog-effects"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 pointer-events-none"
-                >
-                  <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
-                  <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiLz48L3N2Zz4=')] bg-repeat" />
-                </motion.div>
+              <motion.div
+                key="analog-effects"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 pointer-events-none"
+              >
+                <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiLz48L3N2Zz4=')] bg-repeat" />
+              </motion.div>
               {activeIdx === 1 && (
-                <motion.div 
+                <motion.div
                   key="noise-overlay"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -242,7 +238,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
                 </motion.div>
               )}
               {activeIdx === 2 && (
-                <motion.div 
+                <motion.div
                   key="transform-overlay"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -251,7 +247,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
                 />
               )}
               {activeIdx === 3 && (
-                <motion.div 
+                <motion.div
                   key="future-overlay"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -263,7 +259,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
           </div>
 
           <video
-            ref={videoRef1}
+            ref={setVideoRef(0)}
             src={currentVideos[0] || ""}
             autoPlay
             muted={isMuted}
@@ -276,7 +272,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
             )}
           />
           <video
-            ref={videoRef2}
+            ref={setVideoRef(1)}
             src={currentVideos[1] || ""}
             muted={isMuted}
             playsInline
@@ -288,7 +284,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
             )}
           />
           <video
-            ref={videoRef3}
+            ref={setVideoRef(2)}
             src={currentVideos[2] || ""}
             muted={isMuted}
             playsInline
@@ -300,7 +296,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
             )}
           />
           <video
-            ref={videoRef4}
+            ref={setVideoRef(3)}
             src={currentVideos[3] || ""}
             muted={isMuted}
             playsInline
@@ -312,12 +308,9 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
             )}
           />
         </div>
-      </Layer>
 
-      {/* Layer 1 — Noise texture overlay & Narrative Text */}
-      <Layer depth={1} type="background" speed={0.2}>
-        {/* Narrative Text Overlay with Parallax Depth */}
-        <div className="absolute inset-0 pointer-events-none z-40">
+        {/* Layer 1 — Noise texture overlay & Narrative Text */}
+        <div className="absolute inset-0 pointer-events-none z-30">
           <AnimatePresence mode="wait">
             {activeIdx === 0 && (
               <NarrativeText key="antes" text="Antes..." delay={0.8} />
@@ -334,7 +327,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
                   <NarrativeText key="proximo" text="Movete a la velocidad de lo que viene" />
                 )}
                 {revealStage === 1 && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1.05 }}
@@ -350,125 +343,122 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
           </AnimatePresence>
         </div>
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.04] z-30 pointer-events-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
             backgroundSize: "256px",
           }}
         />
-      </Layer>
 
-      {/* Layer 3 — Main content (foreground) */}
-      <Layer depth={3} type="content">
-        <AnimatePresence>
-          {(isFinalScene && (revealStage === 2 || finalIdx === 0)) && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              className="h-full flex flex-col justify-center px-6 md:px-12 max-w-container mx-auto pt-20"
-            >
-              {badge && (
-                <motion.div
+        {/* Hero Content — scrolls up and gets covered */}
+        <div className="absolute inset-0 z-40">
+          <AnimatePresence>
+            {(isFinalScene && (revealStage === 2 || finalIdx === 0)) && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+                className="h-full flex flex-col justify-center px-6 md:px-12 max-w-container mx-auto pt-20"
+              >
+                {badge && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <Badge variant="accent" className="mb-6">
+                      {badge}
+                    </Badge>
+                  </motion.div>
+                )}
+
+                <HeroHeadline text={headline} />
+
+                <motion.p
+                  className="text-muted text-lg md:text-xl max-w-xl mt-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
+                  transition={{ delay: 1 }}
                 >
-                  <Badge variant="accent" className="mb-6">
-                    {badge}
-                  </Badge>
-                </motion.div>
-              )}
+                  {subheadline}
+                </motion.p>
 
-              <HeroHeadline text={headline} />
-
-              <motion.p
-                className="text-muted text-lg md:text-xl max-w-xl mt-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 }}
-              >
-                {subheadline}
-              </motion.p>
-
-              <motion.div
-                className="mt-8 flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 }}
-              >
-                <Button variant="primary" size="xl" magnetic>
-                  <a href={ctaHref}>{ctaLabel}</a>
-                </Button>
-                <Button variant="ghost" size="xl">
-                  <a href="#solution">Ver servicios</a>
-                </Button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Layer>
-
-      {/* Bottom Interface: Sound Toggle & Scroll Cue */}
-      <div className="absolute bottom-8 left-0 w-full z-50 px-6 md:px-12 flex items-end justify-between pointer-events-none">
-        {/* Subtle Sound Toggle */}
-        <div className="pointer-events-auto">
-          <button
-            onClick={() => setIsMuted(!isMuted)}
-            className="group flex items-center gap-3 transition-colors duration-300"
-            aria-label={isMuted ? "Activar sonido" : "Silenciar"}
-          >
-            <div className="flex items-center gap-[2px] h-3">
-              {[...Array(4)].map((_, i) => (
                 <motion.div
-                  key={i}
-                  animate={isMuted ? { height: 2 } : { height: [4, 12, 6, 12, 4] }}
-                  transition={isMuted ? {} : { duration: 0.8, repeat: Infinity, delay: i * 0.1 }}
-                  className="w-[2px] bg-white/40 group-hover:bg-accent transition-colors"
-                />
-              ))}
-            </div>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
-              {isMuted ? "Sound Off" : "Sound On"}
-            </span>
-          </button>
+                  className="mt-8 flex flex-col sm:flex-row gap-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2 }}
+                >
+                  <Button variant="primary" size="xl" magnetic>
+                    <a href={ctaHref}>{ctaLabel}</a>
+                  </Button>
+                  <Button variant="ghost" size="xl">
+                    <a href="#solution">Ver servicios</a>
+                  </Button>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Skip Intro — Mobile only, glass style */}
-        {isMobile && activeIdx < finalIdx && (
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
-            onClick={() => {
-              const finalRef = [videoRef1, videoRef2, videoRef3, videoRef4][finalIdx]?.current
-              if (finalRef) {
-                finalRef.currentTime = 0
-                finalRef.play().catch(() => {})
-              }
-              setActiveIdx(finalIdx)
-              setSkippedIntro(true)
-            }}
-            className="pointer-events-auto backdrop-blur-md bg-white/[0.08] border border-white/[0.15] rounded-full px-4 py-2 flex items-center gap-2 hover:bg-white/[0.12] transition-all duration-300 group"
-          >
-            <span className="text-[10px] uppercase tracking-[0.15em] text-white/60 group-hover:text-white transition-colors">
-              Saltar intro
-            </span>
-            <svg className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </motion.button>
-        )}
+        {/* Bottom Interface: Sound Toggle & Scroll Cue */}
+        <div className="absolute bottom-8 left-0 w-full z-50 px-6 md:px-12 flex items-end justify-between pointer-events-none">
+          <div className="pointer-events-auto">
+            <button
+              onClick={() => setIsMuted(!isMuted)}
+              className="group flex items-center gap-3 transition-colors duration-300"
+              aria-label={isMuted ? "Activar sonido" : "Silenciar"}
+            >
+              <div className="flex items-center gap-[2px] h-3">
+                {[...Array(4)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={isMuted ? { height: 2 } : { height: [4, 12, 6, 12, 4] }}
+                    transition={isMuted ? {} : { duration: 0.8, repeat: Infinity, delay: i * 0.1 }}
+                    className="w-[2px] bg-white/40 group-hover:bg-accent transition-colors"
+                  />
+                ))}
+              </div>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
+                {isMuted ? "Sound Off" : "Sound On"}
+              </span>
+            </button>
+          </div>
 
-        <div className="hidden md:block">
-          {isFinalScene && <ScrollCue />}
+          {isMobile && activeIdx < finalIdx && (
+            <motion.button
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              onClick={() => {
+                const finalRef = videoRefs.current[finalIdx]
+                if (finalRef) {
+                  finalRef.currentTime = 0
+                  finalRef.play().catch(() => {})
+                }
+                setActiveIdx(finalIdx)
+                setSkippedIntro(true)
+              }}
+              className="pointer-events-auto backdrop-blur-md bg-white/[0.08] border border-white/[0.15] rounded-full px-4 py-2 flex items-center gap-2 hover:bg-white/[0.12] transition-all duration-300 group"
+            >
+              <span className="text-[10px] uppercase tracking-[0.15em] text-white/60 group-hover:text-white transition-colors">
+                Saltar intro
+              </span>
+              <svg className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </motion.button>
+          )}
+
+          <div className="hidden md:block">
+            {isFinalScene && <ScrollCue />}
+          </div>
+
+          <div className="w-[80px]" />
         </div>
-
-        {/* Placeholder for symmetry or secondary action */}
-        <div className="w-[80px]" />
       </div>
-    </ParallaxSection>
+    </section>
   )
 }

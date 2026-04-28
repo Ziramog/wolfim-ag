@@ -61,7 +61,7 @@ export function StickyNav() {
                 <img 
                   src="/images/mobile/logo.jpeg" 
                   alt="WOLFIM" 
-                  className="h-10 w-auto object-contain transition-opacity group-hover:opacity-80 mix-blend-screen" 
+                  className="h-[60px] w-auto object-contain transition-opacity group-hover:opacity-80 mix-blend-screen" 
                 />
               </motion.a>
             )}
@@ -73,7 +73,6 @@ export function StickyNav() {
           {[
             { label: "Servicios", href: "#solution" },
             { label: "Resultados", href: "#proof" },
-            { label: "Portfolio", href: "#portfolio" },
           ].map((link) => (
             <a
               key={link.href}
