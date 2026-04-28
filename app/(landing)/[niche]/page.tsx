@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { SmoothScroller } from "@/components/layout/SmoothScroller"
 import { CursorFollower } from "@/components/layout/CursorFollower"
 import { StickyNav } from "@/components/layout/StickyNav"
 import { Hero } from "@/components/sections/Hero/Hero"
@@ -47,14 +46,12 @@ export default function NichePage({ params }: Props) {
       <CursorFollower />
       <StickyNav />
       <Hero {...nicheConfig.hero} />
-      <SmoothScroller>
-        <Problem {...nicheConfig.problem} />
-        <Solution {...nicheConfig.solution} />
-        <Proof {...nicheConfig.proof} />
-        <LiveFeed />
-        <CTA {...nicheConfig.cta} />
-        <Footer />
-      </SmoothScroller>
+      <Problem {...nicheConfig.problem} />
+      <Solution {...nicheConfig.solution} />
+      <Proof {...nicheConfig.proof} />
+      <LiveFeed />
+      <CTA {...nicheConfig.cta} />
+      <Footer />
     </>
   )
 }

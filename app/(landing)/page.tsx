@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation"
-import { SmoothScroller } from "@/components/layout/SmoothScroller"
 import { CursorFollower } from "@/components/layout/CursorFollower"
 import { StickyNav } from "@/components/layout/StickyNav"
 import { Hero } from "@/components/sections/Hero/Hero"
@@ -20,15 +19,13 @@ export default function HomePage() {
       <CursorFollower />
       <StickyNav />
       <Hero {...config.hero} />
-      <SmoothScroller>
-        <Problem {...config.problem} />
-        <Solution {...config.solution} />
-        <Proof {...config.proof} />
-        <CaseShowcase {...config.caseShowcase} />
-        <LiveFeed />
-        <CTA {...config.cta} />
-        <Footer />
-      </SmoothScroller>
+      <Problem {...config.problem} />
+      <Solution {...config.solution} />
+      <Proof {...config.proof} />
+      <CaseShowcase {...config.caseShowcase} />
+      <LiveFeed />
+      <CTA {...config.cta} />
+      <Footer />
     </>
   )
 }
