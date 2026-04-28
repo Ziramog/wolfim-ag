@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Badge } from "@/components/ui/Badge"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils/cn"
@@ -139,6 +139,16 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   const finalIdx = currentVideos.length - 1
   const isFinalScene = activeIdx === finalIdx
 
+  const heroRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  })
+
+  // Hero content fades out and moves up as user scrolls through hero section
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const heroY = useTransform(scrollYProgress, [0, 0.8], [0, -100])
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
     checkMobile()
@@ -163,7 +173,6 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
       }
 
       setRevealStage(0)
-
       const nextRef = videoRefs.current[nextIdx]
 
       if (nextRef && nextRef.src) {
@@ -195,269 +204,268 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
   }
 
   return (
-    <section id="hero" className="relative z-0" style={{ height: "300vh" }}>
-      {/* Sticky viewport — the hero stays fixed while content scrolls over it */}
-      <div className="sticky top-0 h-screen">
+    <section id="hero" ref={heroRef} className="relative z-0" style={{ height: "200vh" }}>
 
-        {/* Layer 0 — Cinematic Video Playlist with Crossfade */}
-        <div className="relative w-full h-full bg-black overflow-hidden">
-          {/* Global Transition Effects (Glitch/Flash) */}
-          <AnimatePresence>
-            {isGlitching && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0.5, 1, 0] }}
-                className="absolute inset-0 z-50 bg-white/20 backdrop-invert-[0.2]"
-                transition={{ duration: 0.4 }}
-              />
-            )}
-          </AnimatePresence>
+      {/* Video Layer — stays at back, always full screen */}
+      <div className="fixed inset-0 z-0 bg-black overflow-hidden">
+        <AnimatePresence>
+          {isGlitching && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.5, 1, 0] }}
+              className="absolute inset-0 z-50 bg-white/20 backdrop-invert-[0.2]"
+              transition={{ duration: 0.4 }}
+            />
+          )}
+        </AnimatePresence>
 
-          {/* Scene-specific Overlays */}
-          <div className="absolute inset-0 z-20 pointer-events-none">
-            <AnimatePresence mode="wait">
+        {/* Scene Overlays */}
+        <div className="absolute inset-0 z-20 pointer-events-none">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key="analog-effects"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 pointer-events-none"
+            >
+              <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
+              <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YW5Ob2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiLz48L3N2Zz4=')] bg-repeat" />
+            </motion.div>
+            {activeIdx === 1 && (
               <motion.div
-                key="analog-effects"
+                key="noise-overlay"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"
               >
-                <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
-                <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiLz48L3N2Zz4=')] bg-repeat" />
+                <div className="absolute inset-0 radial-vignette opacity-25" />
               </motion.div>
-              {activeIdx === 1 && (
-                <motion.div
-                  key="noise-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"
-                >
-                  <div className="absolute inset-0 radial-vignette opacity-25" />
-                </motion.div>
-              )}
-              {activeIdx === 2 && (
-                <motion.div
-                  key="transform-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-black/10 mix-blend-overlay"
-                />
-              )}
-              {activeIdx === 3 && (
-                <motion.div
-                  key="future-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-blue-500/5 mix-blend-screen"
-                />
-              )}
-            </AnimatePresence>
-          </div>
-
-          <video
-            ref={setVideoRef(0)}
-            src={currentVideos[0] || ""}
-            autoPlay
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            onEnded={handleVideoEnd}
-            className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
-              activeIdx === 0 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
-          />
-          <video
-            ref={setVideoRef(1)}
-            src={currentVideos[1] || ""}
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            onEnded={handleVideoEnd}
-            className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
-              activeIdx === 1 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+            {activeIdx === 2 && (
+              <motion.div
+                key="transform-overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/10 mix-blend-overlay"
+              />
             )}
-          />
-          <video
-            ref={setVideoRef(2)}
-            src={currentVideos[2] || ""}
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            onEnded={handleVideoEnd}
-            className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
-              activeIdx === 2 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-            )}
-          />
-          <video
-            ref={setVideoRef(3)}
-            src={currentVideos[3] || ""}
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            onEnded={handleVideoEnd}
-            className={cn(
-              "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
-              activeIdx === 3 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-            )}
-          />
-        </div>
-
-        {/* Layer 1 — Noise texture overlay & Narrative Text */}
-        <div className="absolute inset-0 pointer-events-none z-30">
-          <AnimatePresence mode="wait">
-            {activeIdx === 0 && (
-              <NarrativeText key="antes" text="Antes..." delay={0.8} />
-            )}
-            {activeIdx === 1 && finalIdx >= 1 && (
-              <NarrativeText key="atencion" text="Todo compite por tu atención" variant="glitch" delay={0.3} />
-            )}
-            {activeIdx === 2 && finalIdx >= 2 && (
-              <NarrativeText key="cambio" text="El cambio ya ocurrió" variant="impact" delay={1.2} />
-            )}
-            {isFinalScene && finalIdx > 0 && (
-              <div key="final-sequence" className="contents">
-                {revealStage === 0 && (
-                  <NarrativeText key="proximo" text="Movete a la velocidad de lo que viene" />
-                )}
-                {revealStage === 1 && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.05 }}
-                    className="absolute bottom-[18%] left-0 w-full text-center px-8 z-40"
-                  >
-                    <h2 className="font-body font-bold text-[clamp(1.25rem,4.5vw,2.5rem)] text-white tracking-tight leading-tight mx-auto max-w-[90%]">
-                      Adaptate. O quedate atrás.
-                    </h2>
-                  </motion.div>
-                )}
-              </div>
+            {activeIdx === 3 && (
+              <motion.div
+                key="future-overlay"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-blue-500/5 mix-blend-screen"
+              />
             )}
           </AnimatePresence>
         </div>
+
+        <video
+          ref={setVideoRef(0)}
+          src={currentVideos[0] || ""}
+          autoPlay
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          onEnded={handleVideoEnd}
+          className={cn(
+            "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+            activeIdx === 0 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+          )}
+        />
+        <video
+          ref={setVideoRef(1)}
+          src={currentVideos[1] || ""}
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          onEnded={handleVideoEnd}
+          className={cn(
+            "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+            activeIdx === 1 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+          )}
+        />
+        <video
+          ref={setVideoRef(2)}
+          src={currentVideos[2] || ""}
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          onEnded={handleVideoEnd}
+          className={cn(
+            "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+            activeIdx === 2 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+          )}
+        />
+        <video
+          ref={setVideoRef(3)}
+          src={currentVideos[3] || ""}
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          onEnded={handleVideoEnd}
+          className={cn(
+            "absolute inset-0 object-cover w-full h-full transition-opacity duration-[1200ms] ease-in-out",
+            activeIdx === 3 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+          )}
+        />
+      </div>
+
+      {/* Narrative Text Layer */}
+      <div className="fixed inset-0 z-30 pointer-events-none">
+        <AnimatePresence mode="wait">
+          {activeIdx === 0 && (
+            <NarrativeText key="antes" text="Antes..." delay={0.8} />
+          )}
+          {activeIdx === 1 && finalIdx >= 1 && (
+            <NarrativeText key="atencion" text="Todo compite por tu atención" variant="glitch" delay={0.3} />
+          )}
+          {activeIdx === 2 && finalIdx >= 2 && (
+            <NarrativeText key="cambio" text="El cambio ya ocurrió" variant="impact" delay={1.2} />
+          )}
+          {isFinalScene && finalIdx > 0 && (
+            <div key="final-sequence" className="contents">
+              {revealStage === 0 && (
+                <NarrativeText key="proximo" text="Movete a la velocidad de lo que viene" />
+              )}
+              {revealStage === 1 && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  className="absolute bottom-[18%] left-0 w-full text-center px-8 z-40"
+                >
+                  <h2 className="font-body font-bold text-[clamp(1.25rem,4.5vw,2.5rem)] text-white tracking-tight leading-tight mx-auto max-w-[90%]">
+                    Adaptate. O quedate atrás.
+                  </h2>
+                </motion.div>
+              )}
+            </div>
+          )}
+        </AnimatePresence>
         <div
-          className="absolute inset-0 opacity-[0.04] z-30 pointer-events-none"
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
             backgroundSize: "256px",
           }}
         />
+      </div>
 
-        {/* Hero Content — scrolls up and gets covered */}
-        <div className="absolute inset-0 z-40">
-          <AnimatePresence>
-            {(isFinalScene && (revealStage === 2 || finalIdx === 0)) && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                className="h-full flex flex-col justify-center px-6 md:px-12 max-w-container mx-auto pt-20"
-              >
-                {badge && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <Badge variant="accent" className="mb-6">
-                      {badge}
-                    </Badge>
-                  </motion.div>
-                )}
-
-                <HeroHeadline text={headline} />
-
-                <motion.p
-                  className="text-muted text-lg md:text-xl max-w-xl mt-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 }}
-                >
-                  {subheadline}
-                </motion.p>
-
+      {/* Hero Content — scrolls up and fades as you scroll */}
+      <motion.div
+        className="fixed inset-0 z-40"
+        style={{ opacity: heroOpacity, y: heroY }}
+      >
+        <AnimatePresence>
+          {(isFinalScene && (revealStage === 2 || finalIdx === 0)) && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="h-full flex flex-col justify-center px-6 md:px-12 max-w-container mx-auto pt-20"
+            >
+              {badge && (
                 <motion.div
-                  className="mt-8 flex flex-col sm:flex-row gap-4"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2 }}
+                  transition={{ delay: 0.2 }}
                 >
-                  <Button variant="primary" size="xl" magnetic>
-                    <a href={ctaHref}>{ctaLabel}</a>
-                  </Button>
-                  <Button variant="ghost" size="xl">
-                    <a href="#solution">Ver servicios</a>
-                  </Button>
+                  <Badge variant="accent" className="mb-6">
+                    {badge}
+                  </Badge>
                 </motion.div>
+              )}
+
+              <HeroHeadline text={headline} />
+
+              <motion.p
+                className="text-muted text-lg md:text-xl max-w-xl mt-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+              >
+                {subheadline}
+              </motion.p>
+
+              <motion.div
+                className="mt-8 flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 }}
+              >
+                <Button variant="primary" size="xl" magnetic>
+                  <a href={ctaHref}>{ctaLabel}</a>
+                </Button>
+                <Button variant="ghost" size="xl">
+                  <a href="#solution">Ver servicios</a>
+                </Button>
               </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Bottom Interface: Sound Toggle & Scroll Cue */}
-        <div className="absolute bottom-8 left-0 w-full z-50 px-6 md:px-12 flex items-end justify-between pointer-events-none">
-          <div className="pointer-events-auto">
-            <button
-              onClick={() => setIsMuted(!isMuted)}
-              className="group flex items-center gap-3 transition-colors duration-300"
-              aria-label={isMuted ? "Activar sonido" : "Silenciar"}
-            >
-              <div className="flex items-center gap-[2px] h-3">
-                {[...Array(4)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    animate={isMuted ? { height: 2 } : { height: [4, 12, 6, 12, 4] }}
-                    transition={isMuted ? {} : { duration: 0.8, repeat: Infinity, delay: i * 0.1 }}
-                    className="w-[2px] bg-white/40 group-hover:bg-accent transition-colors"
-                  />
-                ))}
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
-                {isMuted ? "Sound Off" : "Sound On"}
-              </span>
-            </button>
-          </div>
-
-          {isMobile && activeIdx < finalIdx && (
-            <motion.button
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ delay: 1.5, duration: 0.5 }}
-              onClick={() => {
-                const finalRef = videoRefs.current[finalIdx]
-                if (finalRef) {
-                  finalRef.currentTime = 0
-                  finalRef.play().catch(() => {})
-                }
-                setActiveIdx(finalIdx)
-                setSkippedIntro(true)
-              }}
-              className="pointer-events-auto backdrop-blur-md bg-white/[0.08] border border-white/[0.15] rounded-full px-4 py-2 flex items-center gap-2 hover:bg-white/[0.12] transition-all duration-300 group"
-            >
-              <span className="text-[10px] uppercase tracking-[0.15em] text-white/60 group-hover:text-white transition-colors">
-                Saltar intro
-              </span>
-              <svg className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </motion.button>
+            </motion.div>
           )}
+        </AnimatePresence>
+      </motion.div>
 
-          <div className="hidden md:block">
-            {isFinalScene && <ScrollCue />}
-          </div>
-
-          <div className="w-[80px]" />
+      {/* Bottom Interface */}
+      <div className="fixed bottom-8 left-0 w-full z-50 px-6 md:px-12 flex items-end justify-between pointer-events-none">
+        <div className="pointer-events-auto">
+          <button
+            onClick={() => setIsMuted(!isMuted)}
+            className="group flex items-center gap-3 transition-colors duration-300"
+            aria-label={isMuted ? "Activar sonido" : "Silenciar"}
+          >
+            <div className="flex items-center gap-[2px] h-3">
+              {[...Array(4)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={isMuted ? { height: 2 } : { height: [4, 12, 6, 12, 4] }}
+                  transition={isMuted ? {} : { duration: 0.8, repeat: Infinity, delay: i * 0.1 }}
+                  className="w-[2px] bg-white/40 group-hover:bg-accent transition-colors"
+                />
+              ))}
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
+              {isMuted ? "Sound Off" : "Sound On"}
+            </span>
+          </button>
         </div>
+
+        {isMobile && activeIdx < finalIdx && (
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+            onClick={() => {
+              const finalRef = videoRefs.current[finalIdx]
+              if (finalRef) {
+                finalRef.currentTime = 0
+                finalRef.play().catch(() => {})
+              }
+              setActiveIdx(finalIdx)
+              setSkippedIntro(true)
+            }}
+            className="pointer-events-auto backdrop-blur-md bg-white/[0.08] border border-white/[0.15] rounded-full px-4 py-2 flex items-center gap-2 hover:bg-white/[0.12] transition-all duration-300 group"
+          >
+            <span className="text-[10px] uppercase tracking-[0.15em] text-white/60 group-hover:text-white transition-colors">
+              Saltar intro
+            </span>
+            <svg className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </motion.button>
+        )}
+
+        <div className="hidden md:block">
+          {isFinalScene && <ScrollCue />}
+        </div>
+
+        <div className="w-[80px]" />
       </div>
     </section>
   )
