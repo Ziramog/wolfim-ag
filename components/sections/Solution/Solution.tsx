@@ -1,7 +1,6 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import { FadeIn } from "@/components/motion/FadeIn"
 import type { ServiceData } from "@/lib/config/site"
 
@@ -45,60 +44,24 @@ interface SolutionProps {
 }
 
 export function Solution({ headline, services }: SolutionProps) {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  })
-
-  // Content fades out as you scroll through
-  const contentOpacity = useTransform(scrollYProgress, [0.1, 0.3], [1, 0])
-  const contentY = useTransform(scrollYProgress, [0.1, 0.3], [0, -50])
-
   return (
     <section
-      ref={sectionRef}
       id="solution"
-      className="relative"
-      style={{ height: "250vh" }}
+      className="relative bg-[#0a0a0a]"
     >
-      {/* Sticky curtain — gray space background */}
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#0a0a0a]">
-        {/* Subtle gradient overlay at top — for smooth transition from problem */}
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-bg to-transparent z-10" />
+      <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
+        <FadeIn>
+          <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
+          <h2 className="display-xl text-white mb-16 max-w-3xl">
+            {headline}
+          </h2>
+        </FadeIn>
 
-        {/* Grid texture */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,1px) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1px) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        {/* Content — fades out as you scroll through */}
-        <motion.div
-          className="relative z-20 h-full flex flex-col justify-center"
-          style={{ opacity: contentOpacity, y: contentY }}
-        >
-          <div className="max-w-container mx-auto px-6 md:px-12">
-            <FadeIn>
-              <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
-              <h2 className="display-xl text-white mb-16 max-w-3xl">
-                {headline}
-              </h2>
-            </FadeIn>
-
-            <div className="max-w-3xl">
-              {services.map((service, i) => (
-                <ServiceCard key={service.id} service={service} index={i} />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Bottom gradient for smooth transition to next section */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10" />
+        <div className="max-w-3xl">
+          {services.map((service, i) => (
+            <ServiceCard key={service.id} service={service} index={i} />
+          ))}
+        </div>
       </div>
     </section>
   )
