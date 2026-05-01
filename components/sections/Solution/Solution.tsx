@@ -49,31 +49,20 @@ export function Solution({ headline, services }: SolutionProps) {
       id="solution"
       className="relative"
     >
-      {/* Dark multiply layer — darkens the hero video behind */}
-      <div
-        className="absolute inset-0 z-[5] pointer-events-none"
-        style={{ backgroundColor: "rgba(10, 10, 10, 0.88)", mixBlendMode: "multiply" }}
-      />
+      {/* Semi-transparent dark bg — hero video shows through */}
+      <div className="absolute inset-0 bg-[#0a0a0a]/90" />
 
       {/* Content */}
-      <div className="relative z-20 max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
+      <div className="relative z-10 max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
 
-        {/* Header area with holes */}
-        <div className="relative mb-12">
-          {/* 6 screen holes — reveal video through multiply layer */}
-          <div
-            className="absolute -top-4 left-0 pointer-events-none z-10"
-            style={{ mixBlendMode: "screen" }}
-          >
+        {/* Header area with 6 square cutout holes */}
+        <div className="mb-12">
+          {/* 6 transparent square windows — reveal hero video */}
+          <div className="flex flex-wrap gap-3 mb-8">
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-5 h-5"
-                style={{
-                  top: `${Math.floor(i / 3) * 28}px`,
-                  left: `${(i % 3) * 28 + (Math.floor(i / 3) * 14)}px`,
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                }}
+                className="w-5 h-5 bg-transparent border border-white/[0.12]"
               />
             ))}
           </div>
