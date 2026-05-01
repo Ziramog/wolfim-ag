@@ -47,33 +47,15 @@ export function Solution({ headline, services }: SolutionProps) {
   return (
     <section
       id="solution"
-      className="relative"
+      className="relative bg-black"
     >
-      {/* Semi-transparent dark bg — hero video shows through */}
-      <div className="absolute inset-0 bg-[#0a0a0a]/90" />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
-
-        {/* Header area with 6 square cutout holes */}
-        <div className="mb-12">
-          {/* 6 transparent square windows — reveal hero video */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="w-5 h-5 bg-transparent border border-white/[0.12]"
-              />
-            ))}
-          </div>
-
-          <FadeIn>
-            <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
-            <h2 className="display-xl text-white max-w-3xl">
-              {headline}
-            </h2>
-          </FadeIn>
-        </div>
+      <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
+        <FadeIn>
+          <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
+          <h2 className="display-xl text-white mb-16 max-w-3xl">
+            {headline}
+          </h2>
+        </FadeIn>
 
         <div className="max-w-3xl">
           {services.map((service, i) => (
