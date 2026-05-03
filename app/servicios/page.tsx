@@ -158,7 +158,7 @@ export default function ServiciosPage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-[2px] bg-black/10">
             {diagProblems.map((item, i) => (
-              <RevealCard key={item.num} index={i} className="bg-[#c0c0c0] p-8 border-l-2 border-transparent hover:border-[#c0392b] transition-colors">
+              <RevealCard key={item.num} index={i} className="bg-[#d4d4d4] p-8 border-l-2 border-transparent hover:border-[#c0392b] transition-colors">
                 <div className="font-roboto text-[56px] font-bold text-[#c0392b] leading-[1] mb-3">{item.num}</div>
                 <span className="inline-block bg-[#fee2e2] text-[#c0392b] text-[11px] font-bold tracking-[0.1em] uppercase px-2 py-1 rounded mb-4">{item.icon}</span>
                 <h3 className="text-[14px] font-bold text-black mb-2 tracking-[0.02em]">{item.title}</h3>
@@ -177,7 +177,7 @@ export default function ServiciosPage() {
         <hr className="border-black/10 mx-16" />
 
         {/* Solución / Features */}
-        <section className="px-6 md:px-16 py-24 max-w-[1100px] mx-auto">
+        <section className="bg-[#c8c8c8] px-6 md:px-16 py-24 max-w-[1100px] mx-auto">
           <RevealSection>
             <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">02 — Solución</p>
             <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
@@ -210,7 +210,7 @@ export default function ServiciosPage() {
         <hr className="border-black/10 mx-16" />
 
         {/* Pricing */}
-        <section id="pricing" className="bg-[#c8c8c8] px-6 md:px-16 py-24">
+        <section id="pricing" className="px-6 md:px-16 py-24">
           <div className="max-w-[1100px] mx-auto">
             <RevealSection>
               <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">03 — Inversión</p>
@@ -264,7 +264,7 @@ export default function ServiciosPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[2px]">
             {deliveryItems.map((item, i) => (
-              <RevealCard key={item.step} index={i} className="bg-[#c0c0c0] p-8 border-l-2 border-transparent hover:border-[#2e7d32] transition-colors">
+              <RevealCard key={item.step} index={i} className="bg-[#d4d4d4] p-8 border-l-2 border-transparent hover:border-[#2e7d32] transition-colors">
                 <div className="font-roboto text-[64px] font-bold text-[#2e7d32] leading-[1] mb-4">{item.step}</div>
                 <h3 className="text-[14px] font-bold text-black mb-2">{item.title}</h3>
                 <p className="text-[13px] text-black/60 leading-[1.6] font-medium">{item.desc}</p>
@@ -276,7 +276,7 @@ export default function ServiciosPage() {
         <hr className="border-black/10 mx-16" />
 
         {/* Próximos pasos */}
-        <section className="bg-[#c8c8c8] px-6 md:px-16 py-24 max-w-[1100px] mx-auto">
+        <section className="px-6 md:px-16 py-24 max-w-[1100px] mx-auto">
           <RevealSection>
             <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">05 — Acción</p>
             <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
@@ -289,7 +289,7 @@ export default function ServiciosPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[2px]">
             {steps.map((step, i) => (
-              <RevealCard key={step.num} index={i} className="bg-[#c0c0c0] p-10 relative overflow-hidden group">
+              <RevealCard key={step.num} index={i} className="bg-[#d4d4d4] p-10 relative overflow-hidden group">
                 <div className="absolute top-0 left-0 w-1 bg-[#2e7d32] h-0 group-hover:h-full transition-all duration-500" />
                 <div className="font-roboto text-[52px] font-bold text-[#2e7d32] leading-[1] mb-4">{step.num}</div>
                 <h3 className="text-[14px] font-bold text-black mb-2">{step.title}</h3>

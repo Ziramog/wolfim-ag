@@ -38,3 +38,5 @@ next-env.d.ts
 *.avi
 *.mp4
 !public/videos/**
+
+.vercel
