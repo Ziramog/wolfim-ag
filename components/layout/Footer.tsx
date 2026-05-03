@@ -103,10 +103,10 @@ export function Footer() {
             Listo para cazar?
           </p>
           <a
-            href="#cta"
+            href="/servicios"
             className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-black font-semibold text-sm rounded-full hover:bg-accent/90 transition-all hover:gap-4"
           >
-            Empezá a Cazar
+            Ver servicios
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>

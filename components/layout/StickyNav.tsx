@@ -74,8 +74,8 @@ export function StickyNav() {
           {/* Nav links (desktop) */}
           <div className="hidden md:flex items-center gap-8">
             {[
-              { label: "Servicios", href: "#solution" },
-              { label: "Resultados", href: "#proof" },
+              { label: "Servicios", href: "/servicios" },
+              { label: "Resultados", href: "/#proof" },
             ].map((link) => (
               <a
                 key={link.href}
@@ -88,11 +88,11 @@ export function StickyNav() {
             ))}
 
             <a
-              href="#cta"
+              href="/servicios"
               className="inline-flex items-center px-6 py-3 bg-accent text-black text-sm font-semibold hover:bg-accent/90 transition-all"
               data-cursor
             >
-              Consultá gratis
+              Ver servicios
             </a>
           </div>
 

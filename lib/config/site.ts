@@ -70,7 +70,7 @@ export const SITE_CONFIG: SiteConfig = {
     subheadline:
       "Diseños web inmersivos. Dominio SEO. Ads que convierten. WhatsApp en piloto automático. Tu negocio deja de ser invisible hoy.",
     ctaLabel: "Empezá a Cazar",
-    ctaHref: "#cta",
+    ctaHref: "/servicios",
     badge: "Diseño Web + SEO + Ads + Automatización",
   },
 

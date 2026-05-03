@@ -220,49 +220,9 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
         </AnimatePresence>
 
         {/* Scene Overlays */}
-        <div className="absolute inset-0 z-20 pointer-events-none">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key="analog-effects"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 pointer-events-none"
-            >
-              <div className="absolute inset-0 bg-black/40 mix-blend-multiply" />
-              <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YW5Ob2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiLz48L3N2Zz4=')] bg-repeat" />
-            </motion.div>
-            {activeIdx === 1 && (
-              <motion.div
-                key="noise-overlay"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"
-              >
-                <div className="absolute inset-0 radial-vignette opacity-25" />
-              </motion.div>
-            )}
-            {activeIdx === 2 && (
-              <motion.div
-                key="transform-overlay"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-black/10 mix-blend-overlay"
-              />
-            )}
-            {activeIdx === 3 && (
-              <motion.div
-                key="future-overlay"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-blue-500/5 mix-blend-screen"
-              />
-            )}
-          </AnimatePresence>
-        </div>
+        {activeIdx === 3 && (
+          <div className="absolute inset-0 z-20 bg-black/30 pointer-events-none" />
+        )}
 
         <video
           ref={setVideoRef(0)}

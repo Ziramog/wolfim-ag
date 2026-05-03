@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { PT_Serif, Inter, JetBrains_Mono } from "next/font/google"
+import { PT_Serif, Inter, JetBrains_Mono, Roboto } from "next/font/google"
 import "@/app/globals.css"
 import "@/styles/animations.css"
 
@@ -22,6 +22,13 @@ const fontMono = JetBrains_Mono({
   display: "swap",
 })
 
+const fontRoboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
+  display: "swap",
+})
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://wolfim.com"),
 }
@@ -32,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`}>
+    <html lang="es" className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} ${fontRoboto.variable}`}>
       <head>
         <script
           type="application/ld+json"

@@ -10,12 +10,12 @@ interface MobileMenuProps {
 }
 
 const menuItems = [
-  { label: "Inicio", href: "#hero" },
-  { label: "El Problema", href: "#problem" },
-  { label: "Servicios", href: "#solution" },
-  { label: "Resultados", href: "#proof" },
-  { label: "Casos", href: "#cases" },
-  { label: "Precios", href: "#pricing" },
+  { label: "Inicio", href: "/" },
+  { label: "El Problema", href: "/#problem" },
+  { label: "Servicios", href: "/servicios" },
+  { label: "Resultados", href: "/#proof" },
+  { label: "Casos", href: "/#cases" },
+  { label: "Precios", href: "/servicios#pricing" },
 ]
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
@@ -132,7 +132,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className="mt-8"
               >
                 <a
-                  href="#cta"
+                  href="/servicios"
                   onClick={handleLinkClick}
                   className={cn(
                     "inline-flex items-center gap-3",
@@ -141,7 +141,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     "hover:bg-accent/90 transition-all"
                   )}
                 >
-                  Empezá a Cazar
+                  Ver servicios
                   <svg
                     width="16"
                     height="16"
