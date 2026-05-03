@@ -21,14 +21,128 @@ const services = [
   { number: "12", tag: "Nav", title: "Navegación personalizada", description: "Menús y sidebar adaptados al recorrido del usuario. Estructura que guía." },
 ]
 
-const pricingPlans = [
-  { label: "Pago único", title: "Sitio web profesional", subtitle: "Diseño + desarrollo + panel de administración", price: "Desde USD 300", note: "Pago único · 50% adelantado", features: ["Diseño a medida", "12 funcionalidades", "Panel admin incluido", "Entrega en 2-3 semanas"] },
-  { label: "Recurrente", title: "Mantenimiento mensual", subtitle: "Todo incluido. Vos te enfocás en tu negocio.", price: "USD 25", note: "Sin permanencia · Cancelás cuando quieras", suffix: "/mes", features: ["Hosting + SSL incluido", "Soporte técnico <24hs", "Backups automáticos", "Actualización de contenido", "Cambios menores de diseño", "Dominio incluido", "Reporte mensual de visitas"] },
-  { label: "Opcional", title: "Google Ads", subtitle: "Tráfico calificado desde el día 1", price: "Desde USD 80", note: "Setup único: USD 150 · Presupuesto Google aparte", suffix: "/mes", features: ["Keywords de tu zona", "Campañas optimizadas", "Reportes + ajustes mensuales", "Presupuesto google: USD 30–400"] },
+// 4 Planes de Páginas Web
+const webPlans = [
+  {
+    name: "Landing",
+    tag: "Ideal para empezar",
+    setupPrice: 200,
+    maintPrice: 29,
+    features: [
+      "Diseño a medida",
+      "1 página optimizada",
+      "Video background",
+      "WhatsApp flotante",
+      "SEO básico",
+      "Hosting + SSL incluido",
+      "Entrega en 2 semanas",
+    ],
+  },
+  {
+    name: "Profesional",
+    tag: "El más elegido",
+    setupPrice: 300,
+    maintPrice: 29,
+    features: [
+      "Diseño a medida",
+      "Hasta 5 páginas",
+      "Video background",
+      "Galería de fotos",
+      "Filtros inteligentes",
+      "WhatsApp flotante",
+      "SEO optimizado",
+      "Panel admin incluido",
+      "Hosting + SSL incluido",
+      "Entrega en 2-3 semanas",
+    ],
+  },
+  {
+    name: "Catálogo",
+    tag: "Para mostrar productos",
+    setupPrice: 450,
+    maintPrice: 49,
+    features: [
+      "Diseño a medida",
+      "Catálogo de productos",
+      "Filtros avanzados",
+      "Galería de fotos y videos",
+      "WhatsApp flotante",
+      "SEO premium",
+      "Panel admin completo",
+      "Hosting + SSL incluido",
+      "Entrega en 3-4 semanas",
+    ],
+  },
+  {
+    name: "Ecommerce",
+    tag: "Tienda online completa",
+    setupPrice: 450,
+    maintPrice: 89,
+    features: [
+      "Diseño a medida",
+      "Tienda online completa",
+      "Carrito de compras",
+      "Pasarela de pago",
+      "Catálogo de productos",
+      "Filtros avanzados",
+      "WhatsApp flotante",
+      "SEO premium",
+      "Panel admin completo",
+      "Hosting + SSL incluido",
+      "Entrega en 3-4 semanas",
+    ],
+  },
+]
+
+// 3 Tiers de Mantenimiento
+const maintTiers = [
+  {
+    name: "Básico",
+    price: 29,
+    tag: "Esencial",
+    features: [
+      "Hosting + SSL incluido",
+      "Backups automáticos",
+      "Actualizaciones de seguridad",
+      "Soporte técnico <24hs",
+      "Dominio incluido",
+    ],
+  },
+  {
+    name: "Profesional",
+    price: 49,
+    tag: "Recomendado",
+    features: [
+      "Todo lo del Básico",
+      "Cambios menores de diseño",
+      "Reporte mensual de visitas",
+      "Actualización de contenido",
+      "Soporte prioritario",
+    ],
+  },
+  {
+    name: "Premium",
+    price: 89,
+    tag: "Sin límites",
+    features: [
+      "Todo lo del Profesional",
+      "Cambios ilimitados",
+      "Account manager dedicado",
+      "Estrategia digital mensual",
+      "Soporte 24/7",
+    ],
+  },
+]
+
+// Add-ons
+const addons = [
+  { name: "Reservas online", price: "+$100–150 USD", description: "Sistema de citas y reservas integrado a tu web" },
+  { name: "Google Ads setup", price: "+$150 USD", description: "Configuración inicial de campañas optimizadas" },
+  { name: "SEO premium", price: "+$75 USD", description: "Auditoría profunda + estrategia de contenido avanzado" },
 ]
 
 const deliveryItems = [
-  { step: "2-3 Sem", title: "Plazo de entrega", desc: "Desde confirmación y adelanto." },
+  { step: "2-4 Sem", title: "Plazo de entrega", desc: "Desde confirmación y adelanto." },
   { step: "50%", title: "Adelanto", desc: "La mitad para comenzar. El resto al entregar." },
   { step: "∞", title: "Sin permanencia", desc: "El mantenimiento se cancela cuando quieras." },
   { step: "✓", title: "Contrato simple", desc: "Acuerdo claro y por escrito." },
@@ -209,32 +323,90 @@ export default function ServiciosPage() {
 
         <hr className="border-black/10 mx-16" />
 
-        {/* Pricing */}
+        {/* Pricing - 4 Planes */}
         <section id="pricing" className="px-6 md:px-16 py-24">
           <div className="max-w-[1100px] mx-auto">
             <RevealSection>
               <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">03 — Inversión</p>
               <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
-                Precios claros.<br />Sin <em className="italic">letra chica.</em>
+                Planes claros.<br />Sin <em className="italic">letra chica.</em>
               </h2>
               <p className="text-lg text-black/60 mb-16 max-w-[580px] font-medium">
-                Lo que ves es lo que pagás. Sin sorpresas, sin permanencia forzada.
+                Lo que ves es lo que pagás. Setup + mantenimiento mensual. Sin sorpresas.
               </p>
             </RevealSection>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-[2px] justify-center">
-              {pricingPlans.map((plan, i) => (
-                <RevealCard key={plan.label} index={i} className="bg-[#a5d6a7] p-10 border-2 border-[#2e7d32] shadow-lg max-w-[340px] w-full">
-                  <p className="text-[11px] tracking-[0.2em] uppercase text-black font-bold mb-5">{plan.label}</p>
-                  <h3 className="font-roboto text-2xl font-semibold text-black mb-2">{plan.title}</h3>
-                  <p className="text-[13px] text-black/60 mb-6 font-medium">{plan.subtitle}</p>
-                  <div className="font-roboto text-[60px] font-bold text-black leading-[1] mb-1">{plan.price}</div>
-                  <p className="text-[12px] text-black/50 mb-8 font-medium">{plan.note}</p>
-                  <ul className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[2px]">
+              {webPlans.map((plan, i) => (
+                <RevealCard key={plan.name} index={i} className={`p-8 flex flex-col ${plan.name === "Profesional" ? "bg-[#c4ff00] border-2 border-black" : "bg-[#d4d4d4] border border-black/10"}`}>
+                  <span className="text-[10px] tracking-[0.15em] uppercase text-black/50 font-bold mb-2">{plan.tag}</span>
+                  <h3 className="font-roboto text-2xl font-bold text-black mb-1">{plan.name}</h3>
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="font-roboto text-[42px] font-bold text-black leading-[1]">${plan.setupPrice}</span>
+                    <span className="text-black/60 font-medium">USD setup</span>
+                  </div>
+                  <div className="flex items-baseline gap-1 mb-6">
+                    <span className="text-black/60">+</span>
+                    <span className="font-roboto text-2xl font-bold text-black">${plan.maintPrice}</span>
+                    <span className="text-black/60 font-medium">USD/mes</span>
+                  </div>
+                  <p className="text-[11px] text-black/50 mb-6 font-medium border-b border-black/10 pb-4">50% adelantado para empezar</p>
+                  <ul className="space-y-2 flex-1">
                     {plan.features.map((f) => (
-                      <li key={f} className="text-[13.5px] text-black/70 flex items-center gap-3 font-medium border-b border-[#66bb6a] pb-2">
-                        <span className="w-[18px] h-[18px] flex-shrink-0">
-                          <svg viewBox="0 0 20 20" fill="#2e7d32">
+                      <li key={f} className="text-[12.5px] text-black/70 flex items-start gap-2 font-medium">
+                        <span className="w-4 h-4 flex-shrink-0 mt-0.5">
+                          <svg viewBox="0 0 20 20" fill="#22c55e">
+                            <path d="M16.7 5.3a1 1 0 0 0-1.4 0L8 12.6 4.7 9.3a1 1 0 0 0-1.4 1.4l4 4a1 1 0 0 0 1.4 0l8-8a1 1 0 0 0 0-1.4z" />
+                          </svg>
+                        </span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href="https://wa.me/5493510000000"
+                    className={`mt-6 inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold tracking-[0.05em] transition-all ${plan.name === "Profesional" ? "bg-black text-white hover:bg-black/80" : "bg-[#25D366] text-white hover:bg-[#1da851]"}`}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Elegir {plan.name}
+                  </a>
+                </RevealCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <hr className="border-black/10 mx-16" />
+
+        {/* Mantenimiento Section */}
+        <section id="mantenimiento" className="bg-[#e8e8e8] px-6 md:px-16 py-24">
+          <div className="max-w-[1100px] mx-auto">
+            <RevealSection>
+              <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">04 — Mantenimiento</p>
+              <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
+                Hosting + Soporte.<br /><em className="italic">Todo incluido.</em>
+              </h2>
+              <p className="text-lg text-black/60 mb-16 max-w-[580px] font-medium">
+                Tu sitio siempre online, seguro y optimizado. Sin sorpresas, sin permanencia forzada.
+              </p>
+            </RevealSection>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-[2px]">
+              {maintTiers.map((tier, i) => (
+                <RevealCard key={tier.name} index={i} className={`p-8 flex flex-col ${tier.name === "Profesional" ? "bg-white border-2 border-black shadow-lg" : "bg-[#d4d4d4] border border-black/10"}`}>
+                  <span className="text-[10px] tracking-[0.15em] uppercase text-black/50 font-bold mb-2">{tier.tag}</span>
+                  <h3 className="font-roboto text-xl font-bold text-black mb-1">{tier.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-6">
+                    <span className="font-roboto text-[48px] font-bold text-black leading-[1]">${tier.price}</span>
+                    <span className="text-black/60 font-medium">USD/mes</span>
+                  </div>
+                  <ul className="space-y-2 flex-1">
+                    {tier.features.map((f) => (
+                      <li key={f} className="text-[13px] text-black/70 flex items-start gap-2 font-medium">
+                        <span className="w-4 h-4 flex-shrink-0 mt-0.5">
+                          <svg viewBox="0 0 20 20" fill="#22c55e">
                             <path d="M16.7 5.3a1 1 0 0 0-1.4 0L8 12.6 4.7 9.3a1 1 0 0 0-1.4 1.4l4 4a1 1 0 0 0 1.4 0l8-8a1 1 0 0 0 0-1.4z" />
                           </svg>
                         </span>
@@ -250,10 +422,39 @@ export default function ServiciosPage() {
 
         <hr className="border-black/10 mx-16" />
 
+        {/* Add-ons Section */}
+        <section id="addons" className="px-6 md:px-16 py-24">
+          <div className="max-w-[1100px] mx-auto">
+            <RevealSection>
+              <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">05 — Extras</p>
+              <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
+                Potenciá tu sitio.<br /><em className="italic">Añadidos útiles.</em>
+              </h2>
+              <p className="text-lg text-black/60 mb-16 max-w-[580px] font-medium">
+                Extras que agregan valor. Se pueden añadir a cualquier plan.
+              </p>
+            </RevealSection>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {addons.map((addon, i) => (
+                <RevealCard key={addon.name} index={i} className="bg-white border border-black/10 p-8 hover:border-[#c4ff00] hover:shadow-lg transition-all">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="font-roboto text-lg font-bold text-black">{addon.name}</h3>
+                    <span className="font-roboto text-xl font-bold text-[#25D366]">{addon.price}</span>
+                  </div>
+                  <p className="text-[13px] text-black/60 font-medium">{addon.description}</p>
+                </RevealCard>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <hr className="border-black/10 mx-16" />
+
         {/* Entrega */}
         <section className="bg-[#c8c8c8] px-6 md:px-16 py-24 max-w-[1100px] mx-auto">
           <RevealSection>
-            <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">04 — Logística</p>
+            <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">06 — Logística</p>
             <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
               Condiciones<br />de <em className="italic">entrega</em>
             </h2>
@@ -278,7 +479,7 @@ export default function ServiciosPage() {
         {/* Próximos pasos */}
         <section className="px-6 md:px-16 py-24 max-w-[1100px] mx-auto">
           <RevealSection>
-            <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">05 — Acción</p>
+            <p className="text-[12px] tracking-[0.25em] uppercase text-black/40 mb-4 font-bold">07 — Acción</p>
             <h2 className="font-roboto text-[clamp(36px,5vw,64px)] font-bold leading-[1.1] text-black mb-4" style={{ letterSpacing: "-0.01em" }}>
               Próximos<br /><em className="italic">pasos</em>
             </h2>
