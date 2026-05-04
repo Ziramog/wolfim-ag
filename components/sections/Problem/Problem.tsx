@@ -120,14 +120,14 @@ export function Problem({ headline, painPoints }: ProblemProps) {
 
       <div className="max-w-container mx-auto px-6 md:px-12 relative z-10">
         <FadeIn>
-          <span className="overline block mb-4 text-black/60">El problema</span>
+          <span className="block mb-4 text-black/60 font-mono text-[11px] tracking-[0.2em] uppercase">El problema</span>
           <h2 className="display-xl text-black mb-16 max-w-3xl">
             {headline}
           </h2>
         </FadeIn>
 
         {/* Cards grid - 2 columns on md, 1 on mobile, equal height */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {painPoints.map((point, i) => (
             <PainPointCard key={point.title} {...point} index={i} isActive={activeIndex === i} />
           ))}
