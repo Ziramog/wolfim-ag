@@ -90,7 +90,7 @@ export function StickyNav() {
             ))}
 
             <a
-              href="https://wa.me/5493510000000"
+              href="https://wa.me/5491173858454"
               className="inline-flex items-center px-6 py-3 bg-[#25D366] text-white text-sm font-semibold hover:bg-[#1da851] transition-all"
               data-cursor
             >

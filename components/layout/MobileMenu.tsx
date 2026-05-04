@@ -131,7 +131,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 className="mt-8"
               >
                 <a
-                  href="https://wa.me/5493510000000"
+                  href="https://wa.me/5491173858454"
                   onClick={handleLinkClick}
                   className={cn(
                     "inline-flex items-center gap-3",
