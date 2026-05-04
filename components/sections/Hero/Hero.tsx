@@ -279,15 +279,12 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
       <div className="fixed inset-0 z-30 pointer-events-none">
         <AnimatePresence mode="wait">
           {activeIdx === 1 && finalIdx >= 1 && (
-            <NarrativeText key="atencion" text="Todo compite por tu atención" variant="glitch" delay={0.3} />
-          )}
-          {activeIdx === 2 && finalIdx >= 2 && (
-            <NarrativeText key="cambio" text="El cambio ya ocurrió" variant="impact" delay={1.2} />
+            <NarrativeText key="adaptate" text="Adaptate..." variant="glitch" delay={0.3} />
           )}
           {isFinalScene && finalIdx > 0 && (
             <div key="final-sequence" className="contents">
               {revealStage === 0 && (
-                <NarrativeText key="proximo" text="Movete a la velocidad de lo que viene" />
+                <NarrativeText key="proximo" text="El cambio esta sucediendo..." />
               )}
               {revealStage === 1 && (
                 <motion.div
