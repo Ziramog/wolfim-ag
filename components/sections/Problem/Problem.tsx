@@ -34,14 +34,14 @@ function PainPointCard({ title, description, index, isActive }: PainPoint & { in
   return (
     <motion.div
       ref={cardRef}
-      className="group relative bg-black/5 backdrop-blur-sm border border-black/10 p-8 overflow-hidden min-h-[220px] flex flex-col"
+      className="group relative bg-white backdrop-blur-sm border border-black/10 p-8 overflow-hidden min-h-[220px] flex flex-col"
       initial={{ opacity: 0, x: initialX }}
       animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: initialX }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       style={{
         borderColor: isActive ? "rgba(192, 57, 43, 0.4)" : "rgba(0, 0, 0, 0.1)",
-        backgroundColor: isActive ? "rgba(192, 57, 43, 0.08)" : "rgba(0, 0, 0, 0.05)",
+        backgroundColor: isActive ? "rgba(192, 57, 43, 0.08)" : "rgba(255, 255, 255, 1)",
       }}
     >
       {/* Accent line — visible when active */}
@@ -120,7 +120,7 @@ export function Problem({ headline, painPoints }: ProblemProps) {
 
       <div className="max-w-container mx-auto px-6 md:px-12 relative z-10">
         <FadeIn>
-          <span className="overline block mb-4 text-black/30">El problema</span>
+          <span className="overline block mb-4 text-black/60">El problema</span>
           <h2 className="display-xl text-black mb-16 max-w-3xl">
             {headline}
           </h2>
