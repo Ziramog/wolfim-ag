@@ -13,7 +13,7 @@ const DESKTOP_VIDEOS = [
 ]
 
 const MOBILE_VIDEOS = [
-  "/videos/mobile/hero_1_hoy.mp4",
+  "/videos/mobile/hero_0.mp4",
   "/videos/mobile/hero_2_M.mp4",
 ]
 
