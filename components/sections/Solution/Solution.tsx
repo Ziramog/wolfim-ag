@@ -131,10 +131,8 @@ export function Solution({ headline, services }: SolutionProps) {
         <FadeIn>
           <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
 
-          {/* Header row: 40x40 square + headline */}
-          <div className="flex items-start gap-6 mb-16">
-            {/* 40x40px transparent window to hero video */}
-            <div className="w-10 h-10 flex-shrink-0 border border-white/[0.12]" />
+          {/* Header row */}
+          <div className="mb-16">
             <h2 className="display-xl text-white max-w-3xl">
               {headline}
             </h2>
