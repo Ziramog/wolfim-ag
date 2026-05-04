@@ -32,10 +32,18 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
 
   return (
     <ParallaxSection className="min-h-screen flex items-center" id="cta">
-      {/* Layer 0 — Gradient mesh background */}
-      <Layer depth={0} type="background">
-        <div className="absolute inset-0 gradient-mesh" />
-      </Layer>
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        src="/videos/mobile/349784_medium.mp4"
+      />
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/50 z-10" />
 
       {/* Layer 5 — FX glow */}
       <Layer depth={5} type="fx" mouseReactive>
@@ -45,10 +53,10 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
 
       {/* Layer 3 — Content */}
       <Layer depth={3} type="content">
-        <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y w-full">
+        <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y w-full relative z-20">
           <div className="max-w-2xl mx-auto text-center">
             <motion.h2
-              className="font-display text-[clamp(2rem,5vw,4rem)] leading-tight mb-4"
+              className="font-display text-white text-[clamp(2rem,5vw,4rem)] leading-tight mb-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -58,7 +66,7 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
             </motion.h2>
 
             <motion.p
-              className="text-muted text-lg mb-10"
+              className="text-white/70 text-lg mb-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -76,7 +84,7 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                   exit={{ opacity: 0, scale: 0.95 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
-                  className="bg-surface/80 backdrop-blur-xl border border-border rounded-2xl p-6 md:p-8"
+                  className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <Input
@@ -110,14 +118,14 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                     {ctaLabel}
                   </Button>
 
-                  <p className="text-xs text-muted/50 mt-4">
+                  <p className="text-xs text-white/50 mt-4">
                     Sin compromisos · Sin letra chica · Respuesta en menos de 24hs
                   </p>
 
-                  <div className="mt-4 pt-4 border-t border-border">
+                  <div className="mt-4 pt-4 border-t border-white/10">
                     <a
                       href="/servicios#pricing"
-                      className="text-xs text-accent hover:text-accent/80 transition-colors flex items-center justify-center gap-1"
+                      className="text-xs text-[#c4ff00] hover:text-[#c4ff00]/80 transition-colors flex items-center justify-center gap-1"
                     >
                       Ver todos los planes
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -132,20 +140,20 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: "spring", damping: 15 }}
-                  className="bg-surface/80 backdrop-blur-xl border border-accent/20 p-8 md:p-12"
+                  className="bg-black/60 backdrop-blur-xl border border-[#c4ff00]/20 rounded-2xl p-8 md:p-12"
                 >
-                  <div className="w-12 h-12 mb-6 text-accent">
+                  <div className="w-12 h-12 mb-6 text-[#c4ff00]">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-display text-text mb-2">
+                  <h3 className="text-2xl font-display text-white mb-2">
                     ¡Recibimos tu consulta!
                   </h3>
-                  <p className="text-muted">
+                  <p className="text-white/70">
                     Te contactamos en menos de 24 hs por WhatsApp.
                     <br />
-                    <span className="text-accent">Preparate para crecer.</span>
+                    <span className="text-[#c4ff00]">Preparate para crecer.</span>
                   </p>
                 </motion.div>
               )}
