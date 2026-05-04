@@ -36,8 +36,8 @@ function HeroHeadline({ text }: { text: string }) {
   const words = text.split(" ")
   return (
     <motion.h1
-      className="font-display text-black leading-[1] tracking-tight max-w-4xl"
-      style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)', textShadow: '0 4px 30px rgba(255,255,255,0.15)' }}
+      className="font-display text-white leading-[1] tracking-tight max-w-4xl"
+      style={{ fontSize: 'clamp(3.5rem, 9vw, 7rem)', fontWeight: 900, textShadow: '0 4px 40px rgba(0,0,0,0.5)' }}
       initial="hidden"
       animate="visible"
       variants={{
@@ -279,7 +279,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
       {/* Narrative Text Layer */}
       <div className="fixed inset-0 z-30 pointer-events-none">
         <AnimatePresence mode="wait">
-          {activeIdx === 0 && (
+          {activeIdx === 0 && !isMobile && (
             <NarrativeText key="antes" text="Antes..." delay={0.8} />
           )}
           {activeIdx === 1 && finalIdx >= 1 && (
@@ -346,27 +346,13 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
               <HeroHeadline text={headline} />
 
               <motion.p
-                className="text-muted text-lg md:text-xl max-w-xl mt-6"
+                className="text-white text-xl md:text-2xl max-w-xl mt-6 font-medium"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
               >
                 {subheadline}
               </motion.p>
-
-              {priceTag && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.1 }}
-                  className="mt-4"
-                >
-                  <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full">
-                    <span className="w-2 h-2 bg-[#c4ff00] rounded-full animate-pulse" />
-                    {priceTag}
-                  </span>
-                </motion.div>
-              )}
 
               <motion.div
                 className="mt-8 flex flex-col sm:flex-row gap-4"
