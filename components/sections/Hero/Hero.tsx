@@ -8,10 +8,12 @@ import { cn } from "@/lib/utils/cn"
 import type { HeroData } from "@/lib/config/site"
 
 const DESKTOP_VIDEOS = [
+  "/videos/desktop/hero_video_D.mp4",
   "/videos/desktop/hero_video_D_1.mp4",
 ]
 
 const MOBILE_VIDEOS = [
+  "/videos/mobile/hero_1_hoy.mp4",
   "/videos/mobile/hero_2_M.mp4",
 ]
 
