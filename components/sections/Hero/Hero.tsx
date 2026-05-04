@@ -12,8 +12,6 @@ const DESKTOP_VIDEOS = [
 ]
 
 const MOBILE_VIDEOS = [
-  "/videos/mobile/hero_1_antes.mp4",
-  "/videos/mobile/hero_1_hoy.mp4",
   "/videos/mobile/7547848-uhd_2160_3840_25fps.mp4",
   "/videos/mobile/hero_2_M.mp4",
 ]
