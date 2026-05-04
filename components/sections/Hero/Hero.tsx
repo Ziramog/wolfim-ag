@@ -82,6 +82,12 @@ const narrativeVariants = {
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0, scale: 1.05 },
     transition: { type: "spring", damping: 15, stiffness: 300 }
+  },
+  redBig: {
+    initial: { opacity: 0, scale: 0.9 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 1.1 },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
   }
 }
 
@@ -89,12 +95,16 @@ function NarrativeText({
   text,
   variant = "soft",
   delay = 0,
-  duration
+  duration,
+  textColor = "white",
+  fontSize = "clamp(1.25rem,4.5vw,2.5rem)"
 }: {
   text: string;
   variant?: keyof typeof narrativeVariants;
   delay?: number;
   duration?: number;
+  textColor?: string;
+  fontSize?: string;
 }) {
   const [visible, setVisible] = useState(true)
   const currentVariant = narrativeVariants[variant]
@@ -117,7 +127,7 @@ function NarrativeText({
       transition={{ ...currentVariant.transition, delay }}
       className="absolute bottom-[18%] left-0 w-full px-8 z-40 text-center pointer-events-none"
     >
-      <h2 className="font-body font-bold text-[clamp(1.25rem,4.5vw,2.5rem)] text-white tracking-tight leading-tight mx-auto max-w-[90%]">
+      <h2 className="font-body font-bold tracking-tight leading-tight mx-auto max-w-[90%]" style={{ color: textColor, fontSize }}>
         {text}
       </h2>
     </motion.div>
@@ -297,7 +307,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
             <NarrativeText key="cambio" text="El cambio esta sucediendo..." delay={1} duration={4} />
           )}
           {activeIdx === 1 && (
-            <NarrativeText key="adaptate" text="Adaptate..." delay={2} duration={3} />
+            <NarrativeText key="adaptate" text="Adaptate..." variant="redBig" delay={2} duration={3} textColor="#ef4444" fontSize="clamp(2.5rem,8vw,5rem)" />
           )}
         </AnimatePresence>
         <div
