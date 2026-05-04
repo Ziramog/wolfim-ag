@@ -32,13 +32,21 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
 
   return (
     <ParallaxSection className="min-h-screen flex items-center" id="cta">
-      {/* Video background */}
+      {/* Video background — hero video on desktop, night sky on mobile */}
       <video
         autoPlay
         muted
         loop
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
+        src="/videos/desktop/hero_video_D_1.mp4"
+      />
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 md:hidden"
         src="/videos/mobile/6162543_Night Sky Stargazing Milkyway Aurora Borealis_By_Scott_Portingale_Artlist_Vertical_HD.mp4"
       />
 
