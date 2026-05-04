@@ -247,6 +247,6 @@ export const SITE_CONFIG: SiteConfig = {
     headline: "Dejá de ser invisible.",
     subheadline:
       "Tus competidores no esperan. Cada día que seguís invisible es un día que ellos ganan. Reservá tu diagnóstico gratuito — sin compromiso, solo estrategia.",
-    ctaLabel: "Empezá a Cazar Hoy",
+    ctaLabel: "Contactame",
   },
 }

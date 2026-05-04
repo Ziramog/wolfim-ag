@@ -101,7 +101,7 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                     />
                     <Input
                       label="Rubro"
-                      placeholder="Ej: Clínica dental"
+                      placeholder="Ej: Inmobiliaria"
                       value={business}
                       onChange={(e) => setBusiness(e.target.value)}
                     />
