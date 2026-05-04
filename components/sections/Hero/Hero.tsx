@@ -37,11 +37,9 @@ function AdaptateMarquee() {
     offset: ["start end", "end end"],
   })
 
-  // Travel: fully off-screen left at start, fully off-screen right at end
-  const x = useTransform(scrollYProgress, [0, 1], ["-110%", "10%"])
-
-  // Fully visible throughout the scroll journey, fade only at very end
-  const opacity = useTransform(scrollYProgress, [0, 0.9, 1], [1, 1, 0])
+  // Single word — vertical rise from below viewport to off-screen top
+  const y = useTransform(scrollYProgress, [0, 1], ["105%", "-15%"])
+  const opacity = useTransform(scrollYProgress, [0, 0.05, 0.92, 1], [0, 1, 1, 0])
 
   return (
     <div
@@ -49,26 +47,23 @@ function AdaptateMarquee() {
       className="absolute inset-0 z-20 overflow-hidden pointer-events-none"
       style={{ height: "200vh" }}
     >
-      {/* Stick to bottom of viewport, left-aligned */}
-      <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[8vh]">
+      {/* Stick to bottom of viewport */}
+      <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[10vh]">
         <motion.div
           className="flex whitespace-nowrap pl-[2vw]"
-          style={{ x, opacity }}
+          style={{ y, opacity }}
         >
-          {[...Array(4)].map((_, i) => (
-            <span
-              key={i}
-              className="font-display font-black italic tracking-tighter leading-none mr-6"
-              style={{
-                fontSize: "clamp(16rem, 26vw, 32rem)",
-                color: "#ef4444",
-                WebkitTextStroke: "1px rgba(239,68,68,0.3)",
-                textShadow: "0 8px 60px rgba(239,68,68,0.4), 0 0 120px rgba(239,68,68,0.15)",
-              }}
-            >
-              ADAPTATE
-            </span>
-          ))}
+          <span
+            className="font-display font-black italic tracking-tighter leading-none"
+            style={{
+              fontSize: "clamp(16rem, 26vw, 32rem)",
+              color: "#ef4444",
+              WebkitTextStroke: "1px rgba(239,68,68,0.25)",
+              textShadow: "0 8px 60px rgba(239,68,68,0.4), 0 0 120px rgba(239,68,68,0.15)",
+            }}
+          >
+            ADAPTATE
+          </span>
         </motion.div>
       </div>
     </div>
