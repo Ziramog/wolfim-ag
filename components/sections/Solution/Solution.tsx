@@ -132,14 +132,14 @@ export function Solution({ headline, services }: SolutionProps) {
       className="relative overflow-hidden"
       style={{ minHeight: "120vh" }}
     >
-      {/* Background video — desktop only, hero video */}
+      {/* Background video — desktop only */}
       <video
         autoPlay
         muted
         loop
         playsInline
         className="hidden md:block absolute inset-0 w-full h-full object-cover z-0"
-        src="/videos/desktop/hero_video_D.mp4"
+        src="/videos/desktop/video-section-loquehacemos.mp4"
       />
 
       {/* Parallax overlay */}
