@@ -36,8 +36,8 @@ function HeroHeadline({ text }: { text: string }) {
   const words = text.split(" ")
   return (
     <motion.h1
-      className="font-display text-white leading-[1] tracking-tight max-w-4xl"
-      style={{ fontSize: 'clamp(3.5rem, 9vw, 7rem)', fontWeight: 900, textShadow: '0 4px 40px rgba(0,0,0,0.5)' }}
+      className="font-display text-black leading-[1] tracking-tight max-w-4xl"
+      style={{ fontSize: 'clamp(3.5rem, 9vw, 7rem)', fontWeight: 900, textShadow: '0 2px 20px rgba(0,0,0,0.2)' }}
       initial="hidden"
       animate="visible"
       variants={{
