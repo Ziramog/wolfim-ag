@@ -235,6 +235,9 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
         {activeIdx === 3 && (
           <div className="absolute inset-0 z-20 bg-black/30 pointer-events-none" />
         )}
+        {isFinalScene && (
+          <div className="absolute inset-0 z-20 bg-black/20 pointer-events-none" />
+        )}
 
         <video
           ref={setVideoRef(0)}
