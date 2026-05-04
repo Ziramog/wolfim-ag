@@ -31,6 +31,49 @@ const wordVariant = {
   },
 }
 
+function AdaptateMarquee() {
+  const marqueeRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: marqueeRef,
+    offset: ["start start", "end start"],
+  })
+
+  // Map scroll progress to horizontal travel — marquee track is ~3x viewport width
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.66%"])
+
+  // Fade out as we approach the end of the hero section
+  const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [0, 1, 0])
+
+  return (
+    <div
+      ref={marqueeRef}
+      className="absolute inset-0 z-20 overflow-hidden pointer-events-none"
+      style={{ height: "200vh" }}
+    >
+      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+        <motion.div
+          className="flex whitespace-nowrap"
+          style={{ x, opacity }}
+        >
+          {[...Array(6)].map((_, i) => (
+            <span
+              key={i}
+              className="font-display font-black italic tracking-tighter leading-none mr-8"
+              style={{
+                fontSize: "clamp(18rem, 28vw, 35rem)",
+                color: "#c4ff00",
+                textShadow: "0 0 80px rgba(196,255,0,0.25)",
+              }}
+            >
+              ADAPTATE
+            </span>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
 function HeroHeadline({ text }: { text: string }) {
   const words = text.split(" ")
   return (
@@ -298,6 +341,11 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
             activeIdx === 3 ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
           )}
         />
+      </div>
+
+      {/* Adaptate horizontal marquee — scroll-driven, desktop only */}
+      <div className="hidden md:block">
+        <AdaptateMarquee />
       </div>
 
       {/* Narrative Text Layer */}
