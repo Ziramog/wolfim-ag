@@ -101,8 +101,8 @@ export function Problem({ headline, painPoints }: ProblemProps) {
 
   return (
     <section id="problem" className="relative py-section-pad-y overflow-hidden">
-      {/* Space gray background */}
-      <div className="absolute inset-0 bg-[#b8b8b8]" />
+      {/* White background */}
+      <div className="absolute inset-0 bg-white" />
 
       {/* Ambient glow effects */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-black/[0.06] blur-[150px] rounded-full" />
