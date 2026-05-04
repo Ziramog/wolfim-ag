@@ -34,14 +34,14 @@ function AdaptateMarquee() {
   const marqueeRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: marqueeRef,
-    offset: ["start start", "end start"],
+    offset: ["start end", "end end"],
   })
 
-  // Map scroll progress to horizontal travel — marquee track is ~3x viewport width
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.66%"])
+  // Travel: word starts off-screen left, exits off-screen right
+  const x = useTransform(scrollYProgress, [0, 1], ["-30%", "85%"])
 
-  // Fade out as we approach the end of the hero section
-  const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [0, 1, 0])
+  // Fully visible throughout the scroll journey, fade only at very end
+  const opacity = useTransform(scrollYProgress, [0, 0.85, 1], [1, 1, 0])
 
   return (
     <div
@@ -49,19 +49,21 @@ function AdaptateMarquee() {
       className="absolute inset-0 z-20 overflow-hidden pointer-events-none"
       style={{ height: "200vh" }}
     >
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+      {/* Stick to bottom of viewport */}
+      <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[12vh]">
         <motion.div
           className="flex whitespace-nowrap"
           style={{ x, opacity }}
         >
-          {[...Array(6)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <span
               key={i}
-              className="font-display font-black italic tracking-tighter leading-none mr-8"
+              className="font-display font-black italic tracking-tighter leading-none mr-6"
               style={{
-                fontSize: "clamp(18rem, 28vw, 35rem)",
-                color: "#c4ff00",
-                textShadow: "0 0 80px rgba(196,255,0,0.25)",
+                fontSize: "clamp(16rem, 26vw, 32rem)",
+                color: "#ef4444",
+                WebkitTextStroke: "1px rgba(239,68,68,0.3)",
+                textShadow: "0 8px 60px rgba(239,68,68,0.4), 0 0 120px rgba(239,68,68,0.15)",
               }}
             >
               ADAPTATE
