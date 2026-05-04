@@ -113,6 +113,18 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                   <p className="text-xs text-muted/50 mt-4">
                     Sin compromisos · Sin letra chica · Respuesta en menos de 24hs
                   </p>
+
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <a
+                      href="/servicios#pricing"
+                      className="text-xs text-accent hover:text-accent/80 transition-colors flex items-center justify-center gap-1"
+                    >
+                      Ver todos los planes
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                  </div>
                 </motion.div>
               ) : (
                 <motion.div

@@ -4,6 +4,7 @@ export interface HeroData {
   ctaLabel: string
   ctaHref: string
   badge?: string
+  priceTag?: string
 }
 
 export interface PainPoint {
@@ -66,12 +67,13 @@ export interface SiteConfig {
 
 export const SITE_CONFIG: SiteConfig = {
   hero: {
-    headline: "Creamos Dependadores.",
+    headline: "Creamos Depredadores.",
     subheadline:
       "Diseños web inmersivos. Dominio SEO. Ads que convierten. WhatsApp en piloto automático. Tu negocio deja de ser invisible hoy.",
-    ctaLabel: "Empezá a Cazar",
-    ctaHref: "/servicios",
+    ctaLabel: "Ver Planes desde $200",
+    ctaHref: "/servicios#pricing",
     badge: "Diseño Web + SEO + Ads + Automatización",
+    priceTag: "desde USD 200",
   },
 
   problem: {

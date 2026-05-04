@@ -126,7 +126,7 @@ function ScrollCue() {
   )
 }
 
-export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroData) {
+export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag }: HeroData) {
   const [activeIdx, setActiveIdx] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const [revealStage, setRevealStage] = useState(0)
@@ -353,6 +353,20 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
                 {subheadline}
               </motion.p>
 
+              {priceTag && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.1 }}
+                  className="mt-4"
+                >
+                  <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full">
+                    <span className="w-2 h-2 bg-[#c4ff00] rounded-full animate-pulse" />
+                    {priceTag}
+                  </span>
+                </motion.div>
+              )}
+
               <motion.div
                 className="mt-8 flex flex-col sm:flex-row gap-4"
                 initial={{ opacity: 0, y: 20 }}
@@ -363,7 +377,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge }: HeroDa
                   <a href={ctaHref}>{ctaLabel}</a>
                 </Button>
                 <Button variant="ghost" size="xl">
-                  <a href="#solution">Ver servicios</a>
+                  <a href="/servicios#mantenimiento">Mantenimiento desde $29</a>
                 </Button>
               </motion.div>
             </motion.div>
