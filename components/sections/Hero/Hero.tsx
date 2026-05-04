@@ -37,11 +37,11 @@ function AdaptateMarquee() {
     offset: ["start end", "end end"],
   })
 
-  // Travel: word starts off-screen left, exits off-screen right
-  const x = useTransform(scrollYProgress, [0, 1], ["-30%", "85%"])
+  // Travel: fully off-screen left at start, fully off-screen right at end
+  const x = useTransform(scrollYProgress, [0, 1], ["-110%", "10%"])
 
   // Fully visible throughout the scroll journey, fade only at very end
-  const opacity = useTransform(scrollYProgress, [0, 0.85, 1], [1, 1, 0])
+  const opacity = useTransform(scrollYProgress, [0, 0.9, 1], [1, 1, 0])
 
   return (
     <div
@@ -49,10 +49,10 @@ function AdaptateMarquee() {
       className="absolute inset-0 z-20 overflow-hidden pointer-events-none"
       style={{ height: "200vh" }}
     >
-      {/* Stick to bottom of viewport */}
-      <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[12vh]">
+      {/* Stick to bottom of viewport, left-aligned */}
+      <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[8vh]">
         <motion.div
-          className="flex whitespace-nowrap"
+          className="flex whitespace-nowrap pl-[2vw]"
           style={{ x, opacity }}
         >
           {[...Array(4)].map((_, i) => (
