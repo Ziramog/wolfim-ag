@@ -88,13 +88,25 @@ const narrativeVariants = {
 function NarrativeText({
   text,
   variant = "soft",
-  delay = 0
+  delay = 0,
+  duration
 }: {
   text: string;
   variant?: keyof typeof narrativeVariants;
-  delay?: number
+  delay?: number;
+  duration?: number;
 }) {
+  const [visible, setVisible] = useState(true)
   const currentVariant = narrativeVariants[variant]
+
+  useEffect(() => {
+    setVisible(true)
+    const totalDelay = (delay || 0) * 1000 + (duration || 9999) * 1000
+    const timer = setTimeout(() => setVisible(false), totalDelay)
+    return () => clearTimeout(timer)
+  }, [text, delay, duration])
+
+  if (!visible) return null
 
   return (
     <motion.div
@@ -278,27 +290,11 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
       {/* Narrative Text Layer */}
       <div className="fixed inset-0 z-30 pointer-events-none">
         <AnimatePresence mode="wait">
-          {activeIdx === 1 && finalIdx >= 1 && (
-            <NarrativeText key="adaptate" text="Adaptate..." variant="glitch" delay={0.3} />
+          {activeIdx === 0 && (
+            <NarrativeText key="cambio" text="El cambio esta sucediendo..." delay={1} duration={4} />
           )}
-          {isFinalScene && finalIdx > 0 && (
-            <div key="final-sequence" className="contents">
-              {revealStage === 0 && (
-                <NarrativeText key="proximo" text="El cambio esta sucediendo..." />
-              )}
-              {revealStage === 1 && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.05 }}
-                  className="absolute bottom-[18%] left-0 w-full text-center px-8 z-40"
-                >
-                  <h2 className="font-body font-bold text-[clamp(1.25rem,4.5vw,2.5rem)] text-white tracking-tight leading-tight mx-auto max-w-[90%]">
-                    Adaptate. O quedate atrás.
-                  </h2>
-                </motion.div>
-              )}
-            </div>
+          {activeIdx === 1 && (
+            <NarrativeText key="adaptate" text="Adaptate..." delay={2} duration={3} />
           )}
         </AnimatePresence>
         <div
