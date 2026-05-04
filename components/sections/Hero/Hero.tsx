@@ -323,7 +323,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
-              className="h-full flex flex-col justify-center pl-[5vw] pr-4 md:px-12 max-w-container mx-auto pt-20"
+              className="h-full flex flex-col justify-center pl-[5vw] pr-[10px] md:px-12 max-w-container mx-auto pt-20"
             >
               {badge && (
                 <motion.div
