@@ -139,7 +139,7 @@ export const SITE_CONFIG: SiteConfig = {
         outcomes: [
           "ROI 5x en 90 días",
           "CPL optimizado",
-          "每点击付费降低60%",
+          "CPC reducido 60%",
         ],
         accentColor: "var(--color-accent-warm)",
         icon: "",
