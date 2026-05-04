@@ -69,7 +69,7 @@ export const SITE_CONFIG: SiteConfig = {
   hero: {
     headline: "Creamos Depredadores.",
     subheadline:
-      "Diseños web inmersivos. Dominio SEO. Ads que convierten. WhatsApp en piloto automático. Tu negocio deja de ser invisible hoy.",
+      "Diseños web inmersivos. Dominio SEO. Ads que convierten. WhatsApp en piloto automático. Hoy dejas de ser invisible.",
     ctaLabel: "Ver Planes desde $200",
     ctaHref: "/servicios#pricing",
     badge: "Diseño Web + SEO + Ads + Automatización",
