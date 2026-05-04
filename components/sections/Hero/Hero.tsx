@@ -279,9 +279,6 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
       {/* Narrative Text Layer */}
       <div className="fixed inset-0 z-30 pointer-events-none">
         <AnimatePresence mode="wait">
-          {activeIdx === 0 && !isMobile && (
-            <NarrativeText key="antes" text="Antes..." delay={0.8} />
-          )}
           {activeIdx === 1 && finalIdx >= 1 && (
             <NarrativeText key="atencion" text="Todo compite por tu atención" variant="glitch" delay={0.3} />
           )}
