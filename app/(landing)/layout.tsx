@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { SITE_CONFIG } from "@/lib/config/site"
+import { ScrollProgress } from "@/components/layout/ScrollProgress"
 
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.hero.headline} | WOLFIM`,
@@ -22,5 +23,10 @@ export default function LandingLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      <ScrollProgress />
+      {children}
+    </>
+  )
 }
