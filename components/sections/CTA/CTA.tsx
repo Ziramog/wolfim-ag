@@ -39,7 +39,7 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/videos/mobile/349784_medium.mp4"
+        src="/videos/mobile/6162543_Night Sky Stargazing Milkyway Aurora Borealis_By_Scott_Portingale_Artlist_Vertical_HD.mp4"
       />
 
       {/* Dark overlay */}
