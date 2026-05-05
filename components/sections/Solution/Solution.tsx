@@ -119,8 +119,6 @@ export function Solution({ headline, services }: SolutionProps) {
   const headlineRotate = useTransform(scrollYProgress, [0, 1], [-1, 1])
 
   // Mobile marquee
-  const marqueeY = useTransform(scrollYProgress, [0, 1], ["105%", "-25%"])
-  const marqueeOpacity = useTransform(scrollYProgress, [0, 0.06, 0.9, 1], [0, 1, 1, 0])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -150,34 +148,6 @@ export function Solution({ headline, services }: SolutionProps) {
       <div className="absolute inset-0 bg-black z-0 md:hidden" />
 
       {/* Parallax overlay */}
-      <motion.div
-        className="absolute inset-0 bg-black/60 z-10"
-        style={{ scale: useTransform(scrollYProgress, [0, 1], [1, 1.2]) }}
-      />
-
-      {/* ADAPTATE marquee — mobile only */}
-      <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none md:hidden">
-        <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[10vh]">
-          <motion.div
-            className="pl-[2vw]"
-            style={{ y: marqueeY, opacity: marqueeOpacity }}
-          >
-            <span
-              className="font-display font-black italic tracking-tighter leading-none"
-              style={{
-                fontSize: "clamp(9rem, 16vw, 20rem)",
-                color: "#ef4444",
-                WebkitTextStroke: "1px rgba(239,68,68,0.25)",
-                textShadow: "0 8px 60px rgba(239,68,68,0.4), 0 0 120px rgba(239,68,68,0.15)",
-              }}
-            >
-              ADAPTATE
-            </span>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Content */}
       <div className="relative z-20 max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
         <motion.div style={{ y: headlineY, rotate: headlineRotate }}>
           <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
