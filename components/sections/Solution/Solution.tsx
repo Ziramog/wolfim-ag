@@ -153,7 +153,7 @@ export function Solution({ headline, services }: SolutionProps) {
           <span className="overline block mb-4 text-white/30">Lo que hacemos</span>
 
           <div className="mb-16">
-            <h2 className="display-xl text-white max-w-3xl">
+            <h2 className="display-xl text-white whitespace-nowrap">
               {headline}
             </h2>
           </div>
