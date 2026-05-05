@@ -532,7 +532,7 @@ export default function ServiciosPage() {
         <footer className="bg-white px-6 md:px-16 py-5 border-t border-black/10">
           <div className="max-w-[1100px] mx-auto flex justify-between items-center flex-wrap gap-4">
             <div className="flex items-center gap-3">
-              <img src="/wolfim studio white-Photoroom.png" alt="WOLFIM" className="h-[5.1rem] md:h-[6.6rem] w-auto object-contain" />
+              <img src="/wolfim studio white-Photoroom.png" alt="WOLFIM" className="h-[1.7rem] md:h-[2.2rem] w-auto object-contain" />
             </div>
             <p className="text-[12px] text-black/40">Wolfim — Córdoba, Argentina · Mayo 2026</p>
           </div>
