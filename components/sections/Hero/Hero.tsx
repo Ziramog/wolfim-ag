@@ -37,9 +37,9 @@ function AdaptateMarquee() {
     offset: ["start end", "end end"],
   })
 
-  // Diagonal: bottom-left → top-right
-  const x = useTransform(scrollYProgress, [0, 1], ["-120%", "30%"])
-  const y = useTransform(scrollYProgress, [0, 1], ["105%", "-25%"])
+  // Bottom-left → top-right diagonal
+  const x = useTransform(scrollYProgress, [0, 1], ["-100%", "35%"])
+  const y = useTransform(scrollYProgress, [0, 1], ["100%", "-28%"])
   const opacity = useTransform(scrollYProgress, [0, 0.06, 0.88, 1], [0, 1, 1, 0])
 
   return (
