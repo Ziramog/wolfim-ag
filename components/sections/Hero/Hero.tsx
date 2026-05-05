@@ -37,8 +37,9 @@ function AdaptateMarquee() {
     offset: ["start end", "end end"],
   })
 
-  // Single word — vertical rise from below viewport to off-screen top
-  const y = useTransform(scrollYProgress, [0, 1], ["105%", "-15%"])
+  // Diagonal: bottom-left → top-right
+  const x = useTransform(scrollYProgress, [0, 1], ["-115%", "15%"])
+  const y = useTransform(scrollYProgress, [0, 1], ["105%", "-18%"])
   const opacity = useTransform(scrollYProgress, [0, 0.05, 0.92, 1], [0, 1, 1, 0])
 
   return (
@@ -51,7 +52,7 @@ function AdaptateMarquee() {
       <div className="sticky bottom-0 h-screen flex flex-col justify-end overflow-hidden pb-[10vh]">
         <motion.div
           className="flex whitespace-nowrap pl-[2vw]"
-          style={{ y, opacity }}
+          style={{ x, y, opacity }}
         >
           <span
             className="font-display font-black italic tracking-tighter leading-none"
