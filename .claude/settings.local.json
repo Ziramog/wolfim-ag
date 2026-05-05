@@ -20,7 +20,8 @@
       "Bash(git commit *)",
       "WebFetch(domain:localhost)",
       "WebFetch(domain:wolfim-nsp9refqf-ingjuangomariz-7645s-projects.vercel.app)",
-      "WebFetch(domain:wolfim.com)"
+      "WebFetch(domain:wolfim.com)",
+      "WebSearch"
     ]
   }
 }
