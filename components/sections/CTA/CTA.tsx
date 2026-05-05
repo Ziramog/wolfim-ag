@@ -64,7 +64,7 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
         <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y w-full relative z-20">
           <div className="max-w-2xl mx-auto text-center">
             <motion.h2
-              className="font-display text-white text-[clamp(2rem,5vw,4rem)] leading-tight mb-4"
+              className="font-display text-white text-[clamp(2rem,5vw,4rem)] leading-tight mb-4 whitespace-nowrap"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
