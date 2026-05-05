@@ -11,6 +11,21 @@ export function Footer() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
 
       <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mb-12"
+        >
+          <img
+            src="/wolfim studio white-Photoroom.png"
+            alt="WOLFIM"
+            className="h-[5.1rem] md:h-[6.6rem] w-auto object-contain"
+          />
+        </motion.div>
+
         {/* Top section — contact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
