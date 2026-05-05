@@ -57,7 +57,7 @@ function AdaptateMarquee() {
           <span
             className="font-display font-black italic tracking-tighter leading-none"
             style={{
-              fontSize: "clamp(12rem, 22vw, 28rem)",
+              fontSize: "clamp(10rem, 18vw, 22rem)",
               color: "#ef4444",
               WebkitTextStroke: "1px rgba(239,68,68,0.25)",
               textShadow: "0 8px 60px rgba(239,68,68,0.4), 0 0 120px rgba(239,68,68,0.15)",
