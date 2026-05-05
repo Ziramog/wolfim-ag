@@ -64,7 +64,7 @@ export function StickyNav() {
                   <img
                   src="/wolfim studio white-Photoroom.png"
                     alt="WOLFIM"
-                    className="h-[1.7rem] md:h-[2.2rem] w-auto object-contain transition-opacity group-hover:opacity-80 mix-blend-screen"
+                    className="h-[5.1rem] md:h-[6.6rem] w-auto object-contain transition-opacity group-hover:opacity-80 mix-blend-screen"
                   />
                 </motion.a>
               )}
