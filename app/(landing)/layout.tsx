@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { SITE_CONFIG } from "@/lib/config/site"
 import { ScrollProgress } from "@/components/layout/ScrollProgress"
+import { WhatsAppFloating } from "@/components/layout/WhatsAppFloating"
 
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.hero.headline} | WOLFIM`,
@@ -26,6 +27,7 @@ export default function LandingLayout({
   return (
     <>
       <ScrollProgress />
+      <WhatsAppFloating />
       {children}
     </>
   )
