@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { motion, useMotionValue, useTransform, animate } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
 
 const IMAGES = [
@@ -13,23 +13,30 @@ const IMAGES = [
 
 export function CaseShowcase({ headline, subheadline }: { headline: string; subheadline?: string }) {
   const trackRef = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
 
   useEffect(() => {
-    const trackWidth = trackRef.current?.scrollWidth ?? 0
-    const containerWidth = trackRef.current?.offsetWidth ?? 0
-    const totalScroll = trackWidth - containerWidth + 80 // gap included
+    const track = trackRef.current
+    if (!track) return
 
-    const controls = animate(x, [0, -totalScroll], {
-      duration: 20,
-      ease: "linear",
-      repeat: Infinity,
-      repeatType: "loop",
-      repeatDelay: 1,
-    })
+    const totalWidth = track.scrollWidth
+    const visibleWidth = track.offsetWidth
+    const scrollAmount = totalWidth / 2 - visibleWidth + 24
 
-    return controls.stop
-  }, [x])
+    let startTime: number | null = null
+    const duration = 30
+
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp
+      const elapsed = timestamp - startTime
+      const progress = (elapsed % (duration * 1000)) / (duration * 1000)
+      const x = -scrollAmount * progress
+      track.style.transform = `translateX(${x}px)`
+      requestAnimationFrame(step)
+    }
+
+    const rafId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(rafId)
+  }, [])
 
   return (
     <section id="cases" className="relative py-section-pad-y overflow-hidden bg-bg">
@@ -51,23 +58,21 @@ export function CaseShowcase({ headline, subheadline }: { headline: string; subh
         </motion.div>
 
         {/* Auto-scrolling track */}
-        <div ref={trackRef} className="relative overflow-hidden">
-          <motion.div className="flex gap-6 w-max" style={{ x }}>
-            {[...IMAGES, ...IMAGES].map((img, i) => (
-              <div
-                key={`${img.src}-${i}`}
-                className="relative flex-shrink-0 w-[60vw] md:w-[38vw] aspect-[4/3] rounded-2xl overflow-hidden border border-white/[0.06]"
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 60vw, 38vw"
-                />
-              </div>
-            ))}
-          </motion.div>
+        <div ref={trackRef} className="flex gap-6 w-max">
+          {[...IMAGES, ...IMAGES].map((img, i) => (
+            <div
+              key={`${img.src}-${i}`}
+              className="relative flex-shrink-0 w-[60vw] md:w-[38vw] aspect-[4/3] rounded-2xl overflow-hidden border border-white/[0.06]"
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 60vw, 38vw"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
