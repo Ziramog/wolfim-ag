@@ -20,7 +20,7 @@ export function Footer() {
           className="flex justify-center mb-12"
         >
           <img
-            src="/wolfim studio white-Photoroom.png"
+            src="/images/desktop/wolfi_studio_logo.png"
             alt="WOLFIM"
             className="h-[5.1rem] md:h-[6.6rem] w-auto object-contain"
           />

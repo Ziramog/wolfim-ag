@@ -62,7 +62,7 @@ export function StickyNav() {
                   data-cursor
                 >
                   <img
-                  src="/wolfim studio white-Photoroom.png"
+                  src="/images/desktop/wolfi_studio_logo.png"
                     alt="WOLFIM"
                     className="h-[2.55rem] md:h-[3.3rem] w-auto object-contain transition-opacity group-hover:opacity-80 mix-blend-screen"
                   />

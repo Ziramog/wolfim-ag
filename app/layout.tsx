@@ -49,7 +49,7 @@ export default function RootLayout({
               "@type": "ProfessionalService",
               name: "WOLFIM",
               url: process.env.NEXT_PUBLIC_SITE_URL || "https://wolfim.com",
-              logo: `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.png`,
+              logo: `${process.env.NEXT_PUBLIC_SITE_URL}/images/desktop/wolfi_studio_logo.png`,
               description:
                 "Agencia de adquisición de clientes: web, SEO, Google Ads, WhatsApp",
               areaServed: "AR",
