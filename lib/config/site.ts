@@ -50,17 +50,11 @@ export interface CTAData {
   ctaLabel: string
 }
 
-export interface CaseShowcaseData {
-  headline: string
-  subheadline?: string
-}
-
 export interface SiteConfig {
   hero: HeroData
   problem: { headline: string; painPoints: PainPoint[] }
   solution: { headline: string; services: ServiceData[] }
   proof: { metrics: MetricData[]; testimonials: TestimonialData[] }
-  caseShowcase: CaseShowcaseData
   pricing: { headline: string; tiers: PricingTier[] }
   cta: CTAData
 }
@@ -189,11 +183,6 @@ export const SITE_CONFIG: SiteConfig = {
         result: "+200% cierre",
       },
     ],
-  },
-
-  caseShowcase: {
-    headline: "Webs que venden.",
-    subheadline: "Diseñadas para convertir. Construidas para durar.",
   },
 
   pricing: {

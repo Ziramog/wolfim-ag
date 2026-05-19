@@ -5,7 +5,6 @@ import { Hero } from "@/components/sections/Hero/Hero"
 import { Problem } from "@/components/sections/Problem/Problem"
 import { Solution } from "@/components/sections/Solution/Solution"
 import { Proof } from "@/components/sections/Proof/Proof"
-import { CaseShowcase } from "@/components/sections/CaseShowcase/CaseShowcase"
 import { CTA } from "@/components/sections/CTA/CTA"
 import { Footer } from "@/components/layout/Footer"
 import { SITE_CONFIG } from "@/lib/config/site"
@@ -20,7 +19,7 @@ export default function HomePage() {
       <Hero {...config.hero} />
       <Problem {...config.problem} />
       <Solution {...config.solution} />
-      <CaseShowcase {...config.caseShowcase} />
+      <Proof {...config.proof} />
       <CTA {...config.cta} />
       <Footer />
     </>
