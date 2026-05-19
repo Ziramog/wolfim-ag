@@ -1,9 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ParallaxSection } from "@/components/motion/ParallaxSection"
-import { Layer } from "@/components/motion/Layer"
+import { useState, useRef } from "react"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import type { CTAData } from "@/lib/config/site"
@@ -13,6 +11,14 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
   const [name, setName] = useState("")
   const [whatsapp, setWhatsapp] = useState("")
   const [business, setBusiness] = useState("")
+  
+  const sectionRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
 
   const handleSubmit = async () => {
     if (!name || !whatsapp) return
@@ -31,57 +37,32 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
   }
 
   return (
-    <ParallaxSection className="min-h-screen flex items-center" id="cta">
-      {/* Video background — hero video on desktop, night sky on mobile */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
-        src="/videos/desktop/hero_video_D_1.mp4"
-      />
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 md:hidden"
-        src="/videos/mobile/6162543_Night Sky Stargazing Milkyway Aurora Borealis_By_Scott_Portingale_Artlist_Vertical_HD.mp4"
-      />
+    <section ref={sectionRef} className="relative min-h-[90vh] flex items-center bg-bg overflow-hidden border-b border-white/10" id="cta">
+      
+      <div className="bg-grid opacity-50" />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50 z-10" />
+      {/* Decorative Circles */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] rounded-full border border-white/[0.03] flex items-center justify-center">
+        <div className="w-[60%] h-[60%] rounded-full border border-white/[0.05]" />
+      </div>
 
-      {/* Layer 5 — FX glow */}
-      <Layer depth={5} type="fx" mouseReactive>
-        <div className="absolute top-[30%] left-[10%] w-[400px] h-[400px] rounded-full bg-accent/[0.08] blur-[150px]" />
-        <div className="absolute bottom-[20%] right-[15%] w-[300px] h-[300px] rounded-full bg-accent-warm/[0.06] blur-[120px]" />
-      </Layer>
+      <div className="max-w-container mx-auto px-6 md:px-12 py-32 w-full relative z-20">
+        <div className="max-w-3xl mx-auto flex flex-col items-center">
+          
+          <motion.div style={{ y }} className="w-full">
+            <div className="flex items-center gap-4 mb-8 justify-center">
+              <span className="w-8 h-[1px] bg-accent" />
+              <span className="section-label text-accent">INITIATE_SEQUENCE</span>
+              <span className="w-8 h-[1px] bg-accent" />
+            </div>
 
-      {/* Layer 3 — Content */}
-      <Layer depth={3} type="content">
-        <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y w-full relative z-20">
-          <div className="max-w-2xl mx-auto text-center">
-            <motion.h2
-              className="font-display text-white text-[clamp(2rem,5vw,4rem)] leading-tight mb-4 whitespace-nowrap"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
-            >
+            <h2 className="display-xl text-text leading-[0.85] mb-6 text-center uppercase tracking-tighter">
               {headline}
-            </motion.h2>
+            </h2>
 
-            <motion.p
-              className="text-white/70 text-lg mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
+            <p className="text-subhead max-w-lg mx-auto text-center mb-16">
               {subheadline}
-            </motion.p>
+            </p>
 
             <AnimatePresence mode="wait">
               {formState !== "success" ? (
@@ -91,10 +72,15 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                   whileInView={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8"
+                  transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+                  className="bg-bg border border-white/10 p-8 md:p-12 relative group"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-accent" />
+                  <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-accent" />
+                  <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-accent" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-accent" />
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <Input
                       label="Nombre"
                       placeholder="Tu nombre"
@@ -109,7 +95,7 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                     />
                     <Input
                       label="Rubro"
-                      placeholder="Ej: Inmobiliaria"
+                      placeholder="Ej: E-commerce"
                       value={business}
                       onChange={(e) => setBusiness(e.target.value)}
                     />
@@ -126,16 +112,15 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                     {ctaLabel}
                   </Button>
 
-                  <p className="text-xs text-white/50 mt-4">
-                    Sin compromisos · Sin letra chica · Respuesta en menos de 24hs
-                  </p>
-
-                  <div className="mt-4 pt-4 border-t border-white/10">
+                  <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-xs font-mono text-muted uppercase tracking-wider">
+                      STATUS: WAITING_INPUT
+                    </p>
                     <a
                       href="/servicios#pricing"
-                      className="text-xs text-[#c4ff00] hover:text-[#c4ff00]/80 transition-colors flex items-center justify-center gap-1"
+                      className="text-xs font-mono text-accent hover:text-white transition-colors flex items-center gap-2 uppercase tracking-wider"
                     >
-                      Ver todos los planes
+                      <span>Ver planes</span>
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                       </svg>
@@ -148,27 +133,33 @@ export function CTA({ headline, subheadline, ctaLabel }: CTAData) {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: "spring", damping: 15 }}
-                  className="bg-black/60 backdrop-blur-xl border border-[#c4ff00]/20 rounded-2xl p-8 md:p-12"
+                  className="bg-bg border border-accent p-12 text-center relative"
                 >
-                  <div className="w-12 h-12 mb-6 text-[#c4ff00]">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-accent" />
+                  <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-accent" />
+                  <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-accent" />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-accent" />
+
+                  <div className="w-16 h-16 mx-auto mb-8 border border-accent flex items-center justify-center text-accent animate-pulse">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M20 6L9 17l-5-5" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-display text-white mb-2">
-                    ¡Recibimos tu consulta!
+                  
+                  <h3 className="font-display text-3xl text-text mb-4 uppercase tracking-tight">
+                    PROTOCOLO ACTIVADO
                   </h3>
-                  <p className="text-white/70">
-                    Te contactamos en menos de 24 hs por WhatsApp.
+                  <p className="font-mono text-sm text-muted">
+                    Información recibida. Iniciando contacto en T-24H.
                     <br />
-                    <span className="text-[#c4ff00]">Preparate para crecer.</span>
+                    <span className="text-accent mt-2 block">STANDBY FOR TRANSMISSION.</span>
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </motion.div>
         </div>
-      </Layer>
-    </ParallaxSection>
+      </div>
+    </section>
   )
 }

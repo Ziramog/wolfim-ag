@@ -4,18 +4,9 @@ import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import type { PainPoint } from "@/lib/config/site"
 
-function PainPointCard({ title, description, index, isActive }: PainPoint & { index: number; isActive: boolean }) {
+function PainPointCard({ title, description, index }: PainPoint & { index: number }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
-
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"]
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.8])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,59 +18,45 @@ function PainPointCard({ title, description, index, isActive }: PainPoint & { in
           }
         })
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     )
 
     if (cardRef.current) observer.observe(cardRef.current)
     return () => observer.disconnect()
   }, [index])
 
-  const isLeftCard = index % 2 === 0
-  const initialX = isLeftCard ? -80 : 80
-
   return (
     <motion.div
       ref={cardRef}
-      className="group relative bg-white backdrop-blur-sm border border-black/10 p-8 overflow-hidden min-h-[240px] flex flex-col"
-      style={{ y, scale, opacity }}
-      initial={{ opacity: 0, x: initialX, scale: 0.8 }}
-      animate={isVisible ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: initialX, scale: 0.8 }}
-      whileHover={{ scale: 1.02, y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.15)" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative border border-white/10 p-8 min-h-[240px] flex flex-col transition-colors duration-300 hover:bg-white/[0.02]"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
     >
-      {/* Accent line */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-1 bg-[#c0392b]"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: isActive ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
-      />
+      {/* Top Accent Line */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-accent transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out" />
+
+      {/* Crosshairs on hover */}
+      <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
 
       {/* Number */}
-      <div className="font-mono text-[28px] text-black/10 tracking-widest mb-6 leading-none">
-        0{index + 1}
+      <div className="font-mono text-xs text-muted tracking-widest mb-8 flex justify-between items-center">
+        <span>ERR_CODE: 0{index + 1}</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-red-500 group-hover:animate-ping" />
       </div>
 
       {/* Title */}
-      <h3 className="font-display text-2xl md:text-3xl text-black mb-4 group-hover:text-[#c0392b] transition-colors flex-1">
+      <h3 className="font-display font-bold text-2xl text-text mb-4 uppercase tracking-tight group-hover:text-accent transition-colors flex-1">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-black/60 leading-relaxed">
+      <p className="font-mono text-sm text-muted leading-relaxed">
         {description}
       </p>
-
-      {/* Warning icon */}
-      <motion.div
-        className="absolute bottom-8 right-8"
-        animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <svg className="w-6 h-6 text-[#c0392b]" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-        </svg>
-      </motion.div>
     </motion.div>
   )
 }
@@ -90,49 +67,56 @@ interface ProblemProps {
 }
 
 export function Problem({ headline, painPoints }: ProblemProps) {
-  const [activeIndex, setActiveIndex] = useState(-1)
   const sectionRef = useRef<HTMLElement>(null)
-
+  
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   })
 
-  const headlineY = useTransform(scrollYProgress, [0, 1], [100, -100])
-  const headlineOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % painPoints.length)
-    }, 2000)
-    return () => clearInterval(interval)
-  }, [painPoints.length])
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
 
   return (
-    <section ref={sectionRef} id="problem" className="relative py-section-pad-y overflow-hidden">
-      {/* White background */}
-      <div className="absolute inset-0 bg-white" />
-
-      {/* Parallax ambient glow */}
-      <motion.div
-        className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-black/[0.04] blur-[200px] rounded-full"
-        style={{ y: useTransform(scrollYProgress, [0, 1], [-100, 100]) }}
-      />
-
+    <section ref={sectionRef} id="problem" className="relative py-32 overflow-hidden border-b border-white/10">
+      <div className="bg-grid" />
+      
       <div className="max-w-container mx-auto px-6 md:px-12 relative z-10">
-        <motion.div style={{ y: headlineY, opacity: headlineOpacity }}>
-          <span className="block mb-4 text-black/60 font-mono text-[11px] tracking-[0.2em] uppercase">El problema</span>
-          <h2 className="display-xl text-black mb-16 max-w-3xl">
-            {headline}
-          </h2>
-        </motion.div>
+        
+        {/* Header Area */}
+        <div className="flex flex-col md:flex-row gap-12 items-start justify-between mb-20">
+          <motion.div style={{ y }} className="max-w-2xl">
+            <div className="flex items-center gap-4 mb-6">
+              <span className="w-8 h-[1px] bg-red-500" />
+              <span className="section-label text-red-500">DIAGNÓSTICO CRÍTICO</span>
+            </div>
+            <h2 className="display-xl text-text leading-[0.85] mb-6">
+              {headline}
+            </h2>
+            <p className="text-subhead max-w-md">
+              Detectamos patrones de fallo en la infraestructura de marketing tradicional. 
+              Estos son los cuellos de botella que limitan el crecimiento de tu empresa.
+            </p>
+          </motion.div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="hidden md:flex flex-col gap-4 text-right border-r border-white/10 pr-6">
+            <span className="section-label">SYSTEM_SCAN</span>
+            <span className="font-mono text-sm text-muted">ANALYSIS: 100%</span>
+            <span className="font-mono text-sm text-red-500">THREATS: {painPoints.length}</span>
+          </div>
+        </div>
+
+        {/* Technical Divider */}
+        <div className="tech-divider mb-16" />
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-white/10 p-[1px]">
           {painPoints.map((point, i) => (
-            <PainPointCard key={point.title} {...point} index={i} isActive={activeIndex === i} />
+            <div key={point.title} className="bg-bg">
+              <PainPointCard {...point} index={i} />
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   )

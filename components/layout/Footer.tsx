@@ -6,68 +6,99 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative bg-[#080808] border-t border-white/[0.06]">
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+    <footer className="relative bg-bg border-t border-white/10 overflow-hidden">
+      <div className="bg-grid opacity-30" />
+      
+      {/* Decorative Top Line */}
+      <div className="absolute top-0 left-0 w-full flex">
+        <div className="h-[2px] bg-accent w-12" />
+        <div className="h-[1px] bg-white/10 flex-1" />
+      </div>
 
-      <div className="max-w-container mx-auto px-6 md:px-12 py-section-pad-y">
-        {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex justify-center mb-12"
-        >
-          <img
-            src="/images/desktop/wolfi_studio_logo.png"
-            alt="WOLFIM"
-            className="h-[5.1rem] md:h-[6.6rem] w-auto object-contain"
-          />
-        </motion.div>
-
-        {/* Top section — contact */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center gap-3 mb-16"
-        >
-          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">Contacto</span>
-          <a
-            href="mailto:hello@wolfim.com"
-            className="text-xl md:text-2xl font-display text-white hover:text-[#c4ff00] transition-colors tracking-tight"
-          >
-            hello@wolfim.com
-          </a>
-        </motion.div>
-
-        {/* Divider */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full h-px bg-white/[0.06] mb-10"
-        />
-
-        {/* Bottom section — legal + location */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-          <p className="text-[11px] text-white/25 font-mono">
-            © {currentYear} WOLFIM — Córdoba, Argentina
-          </p>
-          <div className="flex items-center gap-1 text-[11px] text-white/25 font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c4ff00]/40" />
-            <span>Trabajando en潜 — Worldwide</span>
+      <div className="max-w-container mx-auto px-6 md:px-12 py-16 relative z-10">
+        
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+          
+          {/* Brand Col */}
+          <div className="lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3 mb-6"
+            >
+              <div className="w-10 h-10 border-2 border-accent flex items-center justify-center relative">
+                <div className="w-2 h-2 bg-accent absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              </div>
+              <span className="font-display font-bold text-2xl tracking-tighter text-text">
+                WOLFIM
+              </span>
+            </motion.div>
+            
+            <p className="text-sm font-mono text-muted uppercase tracking-wider max-w-sm">
+              Ingeniería de crecimiento para operaciones B2B y E-commerce.
+              Sistemas de alta precisión.
+            </p>
           </div>
-        </motion.div>
+
+          {/* Contact Col */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <span className="text-xs font-mono text-accent uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">
+              COM_LINK
+            </span>
+            <div className="flex flex-col gap-3">
+              <a href="mailto:hello@wolfim.com" className="text-sm font-mono text-muted hover:text-white transition-colors">
+                HELLO@WOLFIM.COM
+              </a>
+              <span className="text-sm font-mono text-muted">
+                +54 9 351 123 4567
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Social Col */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <span className="text-xs font-mono text-accent uppercase tracking-widest block mb-4 border-b border-white/10 pb-2">
+              NETWORKS
+            </span>
+            <div className="flex flex-col gap-3">
+              <a href="#" className="text-sm font-mono text-muted hover:text-white transition-colors">LINKEDIN</a>
+              <a href="#" className="text-sm font-mono text-muted hover:text-white transition-colors">INSTAGRAM</a>
+              <a href="#" className="text-sm font-mono text-muted hover:text-white transition-colors">GITHUB</a>
+            </div>
+          </motion.div>
+
+        </div>
+
+        {/* Technical Divider */}
+        <div className="tech-divider mb-8" />
+
+        {/* Bottom Bar */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs font-mono text-white/30 uppercase tracking-widest">
+            © {currentYear} WOLFIM AG. ALL RIGHTS RESERVED.
+          </p>
+          
+          <div className="flex items-center gap-4 text-xs font-mono text-white/30 uppercase tracking-widest">
+            <span>LOC: CORDOBA, AR</span>
+            <span className="w-1 h-1 bg-accent/50" />
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span>SYSTEM: ONLINE</span>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   )
