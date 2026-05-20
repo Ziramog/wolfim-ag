@@ -104,7 +104,7 @@ export function Hero({ headline, subheadline, ctaLabel, ctaHref, badge, priceTag
 
           </div>
 
-          <div className="col-span-1 lg:col-span-3 flex lg:flex-col justify-end gap-12 lg:border-l lg:border-white/10 lg:pl-12 pt-12 lg:pt-0">
+          <div className="col-span-1 lg:col-span-3 flex flex-wrap md:flex-row lg:flex-col justify-start lg:justify-end gap-8 lg:gap-12 lg:border-l lg:border-white/10 lg:pl-12 pt-12 lg:pt-0">
             <motion.div variants={itemVariants} className="flex flex-col gap-2">
               <span className="section-label">STATUS</span>
               <span className="text-white font-mono flex items-center gap-2">
